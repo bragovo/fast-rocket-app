@@ -1,0 +1,13 @@
+{
+  "name": "fast-rocket-app",
+  "version": "1.0.0",
+  "scripts": {
+    "tauri": "tauri"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^1.0.0-rc.8"
+  },
+  "dependencies": {
+    "@tauri-apps/api": "^1.0.0-rc.3"
+  }
+}
