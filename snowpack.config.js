@@ -8,7 +8,7 @@ module.exports = {
     src: '/dist',
   },
   plugins: [
-    ['@snowpack/plugin-typescript']
+    ['@snowpack/plugin-dotenv', '@snowpack/plugin-typescript']
   ],
   packageOptions: {
     /* ... */
