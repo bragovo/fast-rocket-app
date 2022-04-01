@@ -24,18 +24,25 @@ export const Intro: FC = () => {
       }));
 
       socket.send(JSON.stringify({
-        msg: "sub",
+        msg: "method",
         id: nanoid(),
-        name: "stream-room-messages",
-        params: ["GENERAL", false]
+        method: "subscriptions/get",
+        params: []
       }));
 
-      socket.send(JSON.stringify({
-        msg: "sub",
-        id: nanoid(),
-        name: "stream-notify-user",
-        params: [`${USER_ID}/notification`, false]
-      }));
+      // socket.send(JSON.stringify({
+      //   msg: "sub",
+      //   id: nanoid(),
+      //   name: "stream-room-messages",
+      //   params: ["GENERAL", false]
+      // }));
+
+      // socket.send(JSON.stringify({
+      //   msg: "sub",
+      //   id: nanoid(),
+      //   name: "stream-notify-user",
+      //   params: [`${USER_ID}/notification`, false]
+      // }));
 
     });
 
