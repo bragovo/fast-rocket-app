@@ -1,0 +1,28 @@
+{
+  "mount": {
+    "public": {
+      "url": "/",
+      "static": true
+    },
+    "src": {
+      "url": "/dist"
+    }
+  },
+  "plugins": [
+    "@snowpack/plugin-dotenv",
+    "@snowpack/plugin-typescript"
+  ],
+  "optimize": {
+    "bundle": false,
+    "minify": true,
+    "target": "es2018"
+  },
+  "devOptions": {
+    "open": "none"
+  },
+  "routes": [{ "match": "routes", "src": ".*", "dest": "/" }],
+  "alias": {
+    "app": "./src",
+    "services": "./src/services"
+  }
+}

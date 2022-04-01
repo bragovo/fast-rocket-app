@@ -11,12 +11,9 @@
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "skipLibCheck": true,
-    // "paths": {
-    //   "app/*": ["src/*"],
-    //   "services/*": ["src/services/*"],
-    //   "pages/*": ["src/pages/*"],
-    //   "layout/*": ["src/layout/*"],
-    //   "assets/*": ["src/assets/*"]
-    // }
+    "paths": {
+      "app/*": ["src/*"],
+      "services/*": ["src/services/*"]
+    }
   }
 }

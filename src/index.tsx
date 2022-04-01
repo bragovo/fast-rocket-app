@@ -4,8 +4,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom"
 
 import { RootContext } from './context'
 import { RootStore } from './store'
-import { Layout } from './Layout'
-import { Intro } from './Modules/Intro'
+import { Layout } from './layout'
+import { Intro } from './modules/Intro'
 
 const App = () => {
   const [store] = useState(new RootStore())
