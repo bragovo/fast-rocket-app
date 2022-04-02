@@ -24,7 +24,20 @@ export class GroupsStore {
   }
 
   loadGroup = async (groupId: string) => {
-    const data = await getRequest<RoomData>("/groups.messages", { roomId: groupId })
+    const data = await getRequest<RoomData>(
+      "/groups.messages",
+      {
+        roomId: groupId,
+        query: JSON.stringify({
+          tmid: {
+            "$exists": false
+          }
+        }),
+        sort: JSON.stringify({ ts: 1 })
+      }
+    )
+
+    console.log(data)
 
     runInAction(() => {
       this.groups[groupId] = new GroupStore(data.messages)

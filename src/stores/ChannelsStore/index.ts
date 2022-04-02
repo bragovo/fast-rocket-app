@@ -23,7 +23,20 @@ export class ChannelsStore {
   }
 
   loadChannel = async (channelId: string) => {
-    const data = await getRequest<RoomData>("/channels.messages", { roomId: channelId })
+    const data = await getRequest<RoomData>(
+      "/channels.messages",
+      {
+        roomId: channelId,
+        query: JSON.stringify({
+          tmid: {
+            "$exists": false
+          }
+        }),
+        sort: JSON.stringify({ ts: 1 })
+      }
+    )
+
+    console.log(data)
 
     runInAction(() => {
       this.channels[channelId] = new ChannelStore(data.messages)
