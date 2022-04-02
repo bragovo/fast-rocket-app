@@ -1,38 +1,39 @@
 import { observer } from "mobx-react-lite";
 import React, { FC, useMemo } from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useRootContext } from "app/context";
+import cc from 'classcat'
 
 import s from './index.module.css';
 
 export const List: FC = observer(() => {
-  const { channelsStore: { channelsJoined: channels }, groupsStore: { groups } } = useRootContext()
+  const { channelsStore: { channelsList }, groupsStore: { groupsList } } = useRootContext()
 
   const list = useMemo(() => {
     return [
-      ...groups.map(group => ({ _id: group._id, name: group.name, type: "channel" })),
-      ...channels.map(channel => ({ _id: channel._id, name: channel.name, type: "group" })),
+      ...groupsList.map(group => ({ _id: group._id, name: group.name, type: "group" })),
+      ...channelsList.map(channel => ({ _id: channel._id, name: channel.name, type: "channel" })),
     ].sort((a, b) => {
       if(a.name < b.name) { return -1; }
       if(a.name > b.name) { return 1; }
       return 0;
     })
-  }, [groups, channels])
+  }, [groupsList, channelsList])
 
   return (
     <div className={s.root}>
       {list.map(item =>
         <div className={s.item} key={item._id}>
           {item.type === "channel" &&
-            <Link to={`/channels/${item._id}`} className={s.link}>
+            <NavLink  to={`/channels/${item._id}`} className={s.link}>
               # {item.name}
-            </Link>
+            </NavLink>
           }
 
           {item.type === "group" &&
-            <Link to={`/groups/${item._id}`} className={s.link}>
-              = {item.name}
-            </Link>
+            <NavLink to={`/groups/${item._id}`} className={({ isActive }) => cc([s.link, { [s.active]: isActive }])}>
+              &amp; {item.name}
+            </NavLink>
           }
         </div>
       )}

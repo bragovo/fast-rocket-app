@@ -4,6 +4,6 @@
   grid-template-columns: 14rem 1fr;
 }
 
-.channels {
-  /* border-right: 1px solid rgb(var(--theme-sp-color)); */
+.main {
+  display: flex;
 }

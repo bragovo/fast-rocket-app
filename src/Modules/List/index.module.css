@@ -1,5 +1,5 @@
 .root {
-  padding: var(--yr-m) 0;
+  padding: var(--yr-m) var(--xr);
 }
 
 .item {
@@ -10,7 +10,12 @@
   display: block;
   color: rgb(var(--theme-fg-primary-color));
   text-decoration: none;
-  padding: var(--yr-xs) calc(var(--xr) * 2);
+  padding: var(--yr-xs) var(--xr);
+  border-radius: 2px;
+}
+
+.link.active {
+  background: rgba(var(--theme-bg-secondary-color) / 0.5);
 }
 
 .link:hover {

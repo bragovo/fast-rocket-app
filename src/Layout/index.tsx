@@ -12,7 +12,7 @@ export const Layout: FC = () => {
         <List />
       </div>
 
-      <div>
+      <div className={s.main}>
         <Outlet />
       </div>
     </div>

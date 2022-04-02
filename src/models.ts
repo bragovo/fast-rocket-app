@@ -1,17 +1,8 @@
-export interface ChannelsData {
-  channels: ChannelData[]
+export interface RoomData {
+  messages: MessageData[]
 }
 
-export interface ChannelData {
+export interface MessageData {
   _id: string
-  name: string
-}
-
-export interface GroupsData {
-  groups: GroupData[]
-}
-
-export interface GroupData {
-  _id: string
-  name: string
+  msg: string
 }

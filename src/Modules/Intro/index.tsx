@@ -1,8 +1,6 @@
 import React, { FC, useEffect } from "react"
 import { nanoid } from 'nanoid'
 
-console.log(import.meta.env.SNOWPACK_PUBLIC_SPACE_ID)
-
 const { SNOWPACK_PUBLIC_AUTH_TOKEN: AUTH_TOKEN, SNOWPACK_PUBLIC_USER_ID: USER_ID } = import.meta.env
 
 export const Intro: FC = () => {
