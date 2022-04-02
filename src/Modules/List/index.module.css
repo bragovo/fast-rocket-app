@@ -1,0 +1,18 @@
+.root {
+  padding: var(--yr-m) 0;
+}
+
+.item {
+
+}
+
+.link {
+  display: block;
+  color: rgb(var(--theme-fg-primary-color));
+  text-decoration: none;
+  padding: var(--yr-xs) calc(var(--xr) * 2);
+}
+
+.link:hover {
+  background: rgb(var(--theme-bg-secondary-color));
+}

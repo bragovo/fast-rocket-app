@@ -1,0 +1,48 @@
+:root {
+  --xr: 1rem;
+  --yr: 0.25rem;
+
+  --fs-base: calc(var(--yr) * 3.5);
+  --lh-base: calc(var(--yr) * 5);
+
+  --theme-bg-primary-color: 255 255 255;
+  --theme-bg-secondary-color: 248 248 248;
+  --theme-fg-primary-color: 20 20 20;
+  --theme-sp-color: 222 222 222;
+
+  --yr-xs: calc(var(--yr) * 2);
+  --yr-s: calc(var(--yr) * 3);
+  --yr-m: calc(var(--yr) * 6);
+  --yr-l: calc(var(--yr) * 12);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --theme-bg-primary-color: 32 33 36;
+    --theme-bg-secondary-color: 39 40 43;
+    --theme-fg-primary-color: 225 224 224;
+    --theme-sp-color: 222 222 222;
+  }
+}
+
+*,
+::after,
+::before {
+  box-sizing: border-box;
+}
+
+body {
+  font-size: var(--fs-base);
+  line-height: var(--lh-base);
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 400;
+  background: rgb(var(--theme-bg-primary-color));
+  color: rgb(var(--theme-fg-primary-color));
+}
+
+body, main#app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+}
