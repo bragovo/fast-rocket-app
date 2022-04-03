@@ -16,6 +16,7 @@
 
 .thread {
   width: 30%;
+  overflow: hidden;
   flex-shrink: 0;
   position: relative;
 }

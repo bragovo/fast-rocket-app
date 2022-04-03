@@ -20,7 +20,7 @@
 }
 
 .thread {
-  margin-top: var(--yr);
+  margin-top: var(--yr-xs);
 }
 
 .thread button {

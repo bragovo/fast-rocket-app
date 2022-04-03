@@ -13,7 +13,11 @@ export const Thread: FC = observer(() => {
 
   return (
     <div className={s.root}>
-      <div>
+      <div className={s.header}>
+        Thread title
+      </div>
+
+      <div className={s.messages}>
         <Messages messages={threadStore.messages} />
       </div>
     </div>
