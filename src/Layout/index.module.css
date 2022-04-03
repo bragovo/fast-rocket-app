@@ -1,9 +1,9 @@
 .root {
-  flex: 1 0 auto;
+  height: 100%;
   display: grid;
   grid-template-columns: 14rem 1fr;
 }
 
 .main {
-  display: flex;
+  overflow: hidden;
 }

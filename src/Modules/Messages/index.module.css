@@ -9,5 +9,12 @@
   width: calc(var(--yr) * 10);
   height: calc(var(--yr) * 10);
   border-radius: 50%;
-  background: #777;
+  background: rgb(var(--theme-bg-secondary-color));
+  overflow: hidden;
+}
+
+.image img {
+  display: block;
+  width: 100%;
+  height: 100%;
 }

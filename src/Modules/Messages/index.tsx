@@ -3,6 +3,8 @@ import React, { FC, useMemo } from "react";
 
 import s from './index.module.css'
 
+const { SNOWPACK_PUBLIC_SPACE_ID: SPACE_ID } = import.meta.env
+
 export const Messages: FC<RoomData> = ({ messages }) =>  {
   const messagesNormalized = useMemo(() => {
     return messages.filter(message => !message.t)
@@ -15,7 +17,9 @@ export const Messages: FC<RoomData> = ({ messages }) =>  {
           <div key={message._id} className={s.message}>
             <div className={s.avatar}>
               {(index === 0 || arr[index - 1].u._id !== message.u._id) &&
-                <div className={s.image} />
+                <div className={s.image}>
+                  <img src={`${SPACE_ID}/avatar/${message.u.username}`} />
+                </div>
               }
             </div>
 

@@ -22,7 +22,7 @@ export const Channel: FC = observer(() =>  {
     <div className={s.root}>
       {channelsStore.channels[channelId] &&
         <>
-          <div className={s.channel}>
+          <div className={s.header}>
             {channelId}
           </div>
 

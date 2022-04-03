@@ -8,7 +8,7 @@ import s from './index.module.css'
 export const Layout: FC = () => {
   return (
     <div className={s.root}>
-      <div className={s.channels}>
+      <div className={s.list}>
         <List />
       </div>
 

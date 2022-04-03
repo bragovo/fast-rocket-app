@@ -22,7 +22,7 @@ export const Group: FC = observer(() =>  {
     <div className={s.root}>
       {groupsStore.groups[groupId] &&
         <>
-          <div className={s.group}>
+          <div className={s.header}>
             {groupId}
           </div>
 

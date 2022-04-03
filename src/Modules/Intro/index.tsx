@@ -1,6 +1,8 @@
 import React, { FC, useEffect } from "react"
 import { nanoid } from 'nanoid'
 
+import s from './index.module.css'
+
 const { SNOWPACK_PUBLIC_AUTH_TOKEN: AUTH_TOKEN, SNOWPACK_PUBLIC_USER_ID: USER_ID } = import.meta.env
 
 export const Intro: FC = () => {
@@ -57,10 +59,8 @@ export const Intro: FC = () => {
   })
 
   return (
-    <div>
-      <p>
-        Intro page
-      </p>
+    <div className={s.root}>
+      Intro page
     </div>
   )
 }

@@ -10,5 +10,6 @@ export interface MessageData {
   u: {
     _id: string
     name: string
+    username: string
   }
 }

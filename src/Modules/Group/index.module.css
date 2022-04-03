@@ -1,16 +1,18 @@
 .root {
-  flex: 1 0 auto;
+  height: 100%;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  padding: var(--yr-s) var(--xr);
+  overflow: scroll;
 }
 
-.group {
-  padding: var(--yr-s) 0;
+.header {
+  padding: var(--yr-s) var(--xr);
   font-size: calc(var(--yr) * 4);
   font-weight: 700;
 }
 
 .messages {
+  padding: var(--yr-s) var(--xr);
   margin-top: auto;
 }
