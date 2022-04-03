@@ -9,7 +9,7 @@
 .header {
   padding: var(--yr-s) var(--xr);
   font-size: calc(var(--yr) * 4);
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .messages {

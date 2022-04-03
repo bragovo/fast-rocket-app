@@ -33,6 +33,20 @@ export const Messages: FC<RoomData> = ({ messages }) =>  {
               <div>
                 {message.msg}
               </div>
+
+              {message.tcount && message.tcount > 0 &&
+                <div className={s.thread}>
+                  <button type="button">
+                    <div className={s.avs}>
+                      <div className={s.av} />
+                      <div className={s.av} />
+                      <div className={s.av} />
+                    </div>
+                    <div>{message.tcount} replies</div>
+                    <div className={s.rarr}>&rarr;</div>
+                  </button>
+                </div>
+              }
             </div>
           </div>
         )}

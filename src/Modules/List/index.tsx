@@ -25,7 +25,7 @@ export const List: FC = observer(() => {
       {list.map(item =>
         <div className={s.item} key={item._id}>
           {item.type === "channel" &&
-            <NavLink  to={`/channels/${item._id}`} className={s.link}>
+            <NavLink to={`/channels/${item._id}`} className={({ isActive }) => cc([s.link, { [s.active]: isActive }])}>
               # {item.name}
             </NavLink>
           }

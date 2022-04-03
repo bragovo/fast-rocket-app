@@ -15,9 +15,9 @@
 }
 
 .link.active {
-  background: rgba(var(--theme-bg-secondary-color) / 0.5);
+  background: rgba(var(--theme-bg-secondary-color));
 }
 
 .link:hover {
-  background: rgb(var(--theme-bg-secondary-color));
+  background: rgb(var(--theme-sp-color));
 }

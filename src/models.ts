@@ -5,6 +5,7 @@ export interface RoomData {
 export interface MessageData {
   _id: string
   msg: string
+  tcount?: number
   ts: Date
   t: string
   u: {
