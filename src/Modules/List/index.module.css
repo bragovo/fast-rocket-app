@@ -22,3 +22,9 @@
 .link:hover {
   background: rgb(var(--theme-sp-color));
 }
+
+
+.push {
+  margin-top: var(--yr-m);
+  text-align: center;
+}

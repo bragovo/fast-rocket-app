@@ -20,6 +20,10 @@ export const List: FC = observer(() => {
     })
   }, [groupsList, channelsList])
 
+  const handlePushClick = () => {
+    new Notification('title', { body: 'some text' })
+  }
+
   return (
     <div className={s.root}>
       {list.map(item =>
@@ -37,6 +41,10 @@ export const List: FC = observer(() => {
           }
         </div>
       )}
+
+      <div className={s.push}>
+        <button type="button" onClick={handlePushClick}>Test Pushes</button>
+      </div>
     </div>
   )
 })

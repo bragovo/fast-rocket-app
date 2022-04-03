@@ -48,6 +48,9 @@
       "http": {
         "request": true,
         "scope": ["https://**"]
+      },
+      "notification": {
+        "all": true
       }
     },
     "windows": [
