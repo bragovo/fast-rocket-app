@@ -1,9 +1,31 @@
 .root {
   height: 100%;
-  display: grid;
-  grid-template-columns: 14rem 1fr;
+  display: flex;
+  /* grid-template-columns: 14rem 3fr 2fr; */
+}
+
+.list {
+  width: 14rem;
+  flex-shrink: 0;
 }
 
 .main {
   overflow: hidden;
+  flex-grow: 1;
+}
+
+.thread {
+  width: 30%;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.thread::before {
+  position: absolute;
+  content: '';
+  display: block;
+  left: 0;
+  top: 10%;
+  bottom: 10%;
+  border-left: 1px solid rgb(var(--theme-sp-color));
 }

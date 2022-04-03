@@ -1,13 +1,13 @@
 .message {
   margin-bottom: var(--yr-s);
   display: grid;
-  grid-template-columns: calc(var(--yr) * 10) 1fr;
+  grid-template-columns: calc(var(--yr) * 8) 1fr;
   grid-gap: var(--xr);
 }
 
 .image {
-  width: calc(var(--yr) * 10);
-  height: calc(var(--yr) * 10);
+  width: calc(var(--yr) * 8);
+  height: calc(var(--yr) * 8);
   border-radius: 50%;
   background: rgb(var(--theme-bg-secondary-color));
   overflow: hidden;

@@ -1,3 +1,4 @@
+import { useRootContext } from "app/context";
 import { RoomData } from "app/models";
 import React, { FC, useMemo } from "react";
 
@@ -6,9 +7,15 @@ import s from './index.module.css'
 const { SNOWPACK_PUBLIC_SPACE_ID: SPACE_ID } = import.meta.env
 
 export const Messages: FC<RoomData> = ({ messages }) =>  {
+  const { threadsStore } = useRootContext()
+
   const messagesNormalized = useMemo(() => {
     return messages.filter(message => !message.t)
   }, [messages])
+
+  const handleThreadClick = (tmid: string) => {
+    threadsStore.setThread(tmid)
+  }
 
   return (
     <div className={s.root}>
@@ -36,7 +43,7 @@ export const Messages: FC<RoomData> = ({ messages }) =>  {
 
               {message.tcount && message.tcount > 0 &&
                 <div className={s.thread}>
-                  <button type="button">
+                  <button type="button" onClick={() => handleThreadClick(message._id)}>
                     <div className={s.avs}>
                       <div className={s.av} />
                       <div className={s.av} />
