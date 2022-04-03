@@ -1,6 +1,7 @@
 import { useRootContext } from "app/context";
 import { RoomData } from "app/models";
 import React, { FC, useMemo } from "react";
+import { Send } from "../Send";
 
 import s from './index.module.css'
 
@@ -57,6 +58,10 @@ export const Messages: FC<RoomData> = ({ messages }) =>  {
             </div>
           </div>
         )}
+      </div>
+
+      <div>
+        <Send />
       </div>
     </div>
   )

@@ -12,6 +12,7 @@
   text-decoration: none;
   padding: var(--yr-xs) var(--xr);
   border-radius: 2px;
+  color: rgb(var(--theme-fg-primary-color));
 }
 
 .link.active {
