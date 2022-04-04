@@ -8,15 +8,15 @@ import s from './index.module.css'
 
 export const Group: FC = observer(() =>  {
   const { groupId } = useParams()
-  const { groupsStore } = useRootContext()
-
-  if (!groupId) return null;
+  const { groupsStore, space } = useRootContext()
 
   useEffect(() =>  {
-    if (!groupsStore.groups[groupId]) {
-      groupsStore.loadGroup(groupId)
+    if (space && groupId && !groupsStore.groups[groupId]) {
+      groupsStore.loadGroup(space, groupId)
     }
-  }, [groupId])
+  }, [groupId, space])
+
+  if (!groupId || !space) return null;
 
   return (
     <div className={s.root}>

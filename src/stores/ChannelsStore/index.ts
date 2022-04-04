@@ -1,29 +1,31 @@
-import { makeAutoObservable, runInAction } from "mobx";
+import { makeAutoObservable, runInAction, autorun } from "mobx";
 import { ChannelData, ChannelsData } from "./models";
-import { getRequest } from "services/getRequest";
 import { ChannelStore } from "../ChannelStore";
 import { RoomData } from "app/models";
+import { RootStore } from "../RootStore";
+import { SpaceStore } from "../SpaceStore";
 
 export class ChannelsStore {
   channelsList: ChannelData[] = []
   channels: Record<string, ChannelStore> = {}
+  rootStore: RootStore
 
-  constructor () {
-    makeAutoObservable(this)
+  constructor (rootStore: RootStore) {
+    makeAutoObservable(this, { rootStore: false })
 
-    this.loadChannels()
+    this.rootStore = rootStore
   }
 
-  loadChannels = async () => {
-    const data = await getRequest<ChannelsData>("/channels.list.joined", {})
+  loadChannels = async (space: SpaceStore) => {
+    const data = await space.getRequest<ChannelsData>("/channels.list.joined", {})
 
     runInAction(() => {
       this.channelsList = data.channels
     })
   }
 
-  loadChannel = async (channelId: string) => {
-    const data = await getRequest<RoomData>(
+  loadChannel = async (space: SpaceStore, channelId: string) => {
+    const data = await space.getRequest<RoomData>(
       "/channels.messages",
       {
         roomId: channelId,
@@ -35,8 +37,6 @@ export class ChannelsStore {
         sort: JSON.stringify({ ts: 1 })
       }
     )
-
-    console.log(data)
 
     runInAction(() => {
       this.channels[channelId] = new ChannelStore(data.messages)

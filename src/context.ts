@@ -1,9 +1,18 @@
-import { createContext, useContext } from 'react'
-import type { RootStore } from './stores/RootStore'
+import { RootStore } from './stores/RootStore'
+import localForage from "localforage";
 
-// eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-export const RootContext = createContext({} as RootStore)
+const loadSpaceFromStorage = async () => {
+  const userId = await localForage.getItem<string>('userId')
+  const authToken = await localForage.getItem<string>('authToken')
+
+  return { userId, authToken }
+}
+
+const { userId, authToken } = await loadSpaceFromStorage()
+
+const rootStore = new RootStore(userId ?? undefined, authToken ?? undefined)
 
 export function useRootContext(): RootStore {
-  return useContext(RootContext)
+  return rootStore
 }
+

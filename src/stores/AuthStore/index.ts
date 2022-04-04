@@ -1,13 +1,14 @@
 import { makeAutoObservable } from "mobx"
 
 export class AuthStore {
-  authToken: string = 'AUTH_TOKEN'
-  userId: string = 'USER_ID'
+  authToken: string
+  userId: string
 
-  constructor () {
+  constructor (userId: string, authToken: string) {
+    this.authToken = userId
+    this.userId = authToken
+
     makeAutoObservable(this)
-
-    // this.loadMe()
   }
 
   // loadMe = async (): Promise<void> => {

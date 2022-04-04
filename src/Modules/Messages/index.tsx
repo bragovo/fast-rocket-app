@@ -8,14 +8,14 @@ import s from './index.module.css'
 const { SNOWPACK_PUBLIC_SPACE_ID: SPACE_ID } = import.meta.env
 
 export const Messages: FC<RoomData> = ({ messages }) =>  {
-  const { threadsStore } = useRootContext()
+  const { threadsStore, space } = useRootContext()
 
   const messagesNormalized = useMemo(() => {
     return messages.filter(message => !message.t)
   }, [messages])
 
   const handleThreadClick = (tmid: string) => {
-    threadsStore.setThread(tmid)
+    if (space) threadsStore.setThread(space, tmid)
   }
 
   return (

@@ -1,21 +1,25 @@
 import { makeAutoObservable, runInAction } from "mobx";
-import { getRequest } from "services/getRequest";
 import { MessageData, RoomData } from "app/models";
 import { GroupStore } from "../GroupStore";
 import { ThreadStore } from "../ThreadStore";
+import { RootStore } from "../RootStore";
+import { SpaceStore } from "../SpaceStore";
 
 
 export class ThreadsStore {
   threads: Record<string, ThreadStore> = {}
   tmid: string | false = false
+  rootStore: RootStore
 
-  constructor() {
-    makeAutoObservable(this)
+  constructor(rootStore: RootStore) {
+    makeAutoObservable(this, { rootStore: false })
+
+    this.rootStore = rootStore
   }
 
-  setThread = async (tmid: string) => {
+  setThread = async (space: SpaceStore, tmid: string) => {
     if (!this.threads[tmid]) {
-      await this.loadMessages(tmid)
+      await this.loadMessages(space, tmid)
     }
 
     runInAction(() => {
@@ -23,8 +27,8 @@ export class ThreadsStore {
     })
   }
 
-  loadMessages = async (tmid: string) => {
-    const data = await getRequest<RoomData>(
+  loadMessages = async (space: SpaceStore, tmid: string) => {
+    const data = await space.getRequest<RoomData>(
       "/chat.getThreadMessages",
       {
         tmid: tmid,

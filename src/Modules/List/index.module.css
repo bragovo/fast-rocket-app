@@ -24,7 +24,7 @@
 }
 
 
-.push {
+.push, .logout {
   margin-top: var(--yr-m);
   text-align: center;
 }

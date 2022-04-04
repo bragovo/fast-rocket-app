@@ -1,30 +1,32 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import { GroupData, GroupsData } from "./models";
-import { getRequest } from "services/getRequest";
 import { RoomData } from "app/models";
 import { GroupStore } from "../GroupStore";
+import { RootStore } from "../RootStore";
+import { SpaceStore } from "../SpaceStore";
 
 
 export class GroupsStore {
   groupsList: GroupData[] = []
   groups: Record<string, GroupStore> = {}
+  rootStore: RootStore
 
-  constructor () {
-    makeAutoObservable(this)
+  constructor (rootStore: RootStore) {
+    makeAutoObservable(this, { rootStore: false })
 
-    this.loadGroups()
+    this.rootStore = rootStore
   }
 
-  loadGroups = async () => {
-    const data = await getRequest<GroupsData>("/groups.list", {})
+  loadGroups = async (space: SpaceStore) => {
+    const data = await space.getRequest<GroupsData>("/groups.list", {})
 
     runInAction(() => {
       this.groupsList = data.groups
     })
   }
 
-  loadGroup = async (groupId: string) => {
-    const data = await getRequest<RoomData>(
+  loadGroup = async (space: SpaceStore, groupId: string) => {
+    const data = await space.getRequest<RoomData>(
       "/groups.messages",
       {
         roomId: groupId,
@@ -36,8 +38,6 @@ export class GroupsStore {
         sort: JSON.stringify({ ts: 1 })
       }
     )
-
-    console.log(data)
 
     runInAction(() => {
       this.groups[groupId] = new GroupStore(data.messages)

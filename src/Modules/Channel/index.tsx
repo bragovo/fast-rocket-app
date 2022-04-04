@@ -8,15 +8,15 @@ import s from './index.module.css'
 
 export const Channel: FC = observer(() =>  {
   const { channelId } = useParams()
-  const { channelsStore } = useRootContext()
-
-  if (!channelId) return null;
+  const { channelsStore, space } = useRootContext()
 
   useEffect(() =>  {
-    if (!channelsStore.channels[channelId]) {
-      channelsStore.loadChannel(channelId)
+    if (space && channelId && !channelsStore.channels[channelId]) {
+      channelsStore.loadChannel(space, channelId)
     }
-  }, [channelId])
+  }, [channelId, space])
+
+  if (!channelId || !space) return null;
 
   return (
     <div className={s.root}>
