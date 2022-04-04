@@ -3,3 +3,4 @@
 
 # Snowpack
 .env
+/build
