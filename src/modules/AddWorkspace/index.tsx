@@ -13,8 +13,8 @@ export const AddWorkspace: FC = () => {
   const rootStore = useRootContext()
   const navigation = useNavigate()
   const client = getClient()
-  const [user, setUser] = useState('qad')
-  const [password, setPassword] = useState('!234Qwer')
+  const [user, setUser] = useState('')
+  const [password, setPassword] = useState('')
   const [totp, setTotp] = useState(false)
   const [code, setCode] = useState('')
 
