@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState } from 'react'
 import * as ReactDOMClient from 'react-dom/client'
 import { BrowserRouter, Routes, Route, useNavigate, Outlet } from "react-router-dom"
 
-import { Layout } from './layout'
+import { Layout } from './Layout'
 import { Intro } from './modules/Intro'
 import { Channel } from './modules/Channel'
 import { Group } from './modules/Group'
