@@ -1,32 +1,28 @@
 import { autorun, makeAutoObservable, runInAction } from "mobx";
 import localForage from "localforage";
 
-import { AuthStore } from "../AuthStore";
-import { ChannelsStore } from "../ChannelsStore";
-import { GroupsStore } from "../GroupsStore";
 import { ThreadsStore } from "../ThreadsStore";
-import { getClient } from "@tauri-apps/api/http";
 import { SpaceStore } from "../SpaceStore";
+import { RoomsStore } from "../RoomsStore";
 
 const { SNOWPACK_PUBLIC_SPACE_ID: SPACE_ID, SNOWPACK_PUBLIC_API_PATH: API_PATH } = import.meta.env
 
 export class RootStore {
   initialized = false
   space: SpaceStore | false = false
-  channelsStore: ChannelsStore
-  groupsStore: GroupsStore
+  roomsStore: RoomsStore
   threadsStore: ThreadsStore
+  offline = false
 
   constructor(userId?: string, authToken?: string) {
     makeAutoObservable(this)
 
     if (userId && authToken) {
-      this.space = new SpaceStore(this, `${SPACE_ID}${API_PATH}`, userId, authToken)
+      this.space = new SpaceStore(this, SPACE_ID, API_PATH, userId, authToken)
     }
 
-    this.channelsStore = new ChannelsStore(this)
-    this.groupsStore = new GroupsStore(this)
     this.threadsStore = new ThreadsStore(this)
+    this.roomsStore = new RoomsStore(this)
 
     this.initialize()
   }
@@ -35,14 +31,30 @@ export class RootStore {
   initialize = () => {
     autorun(() => {
       if (this.space) {
-        this.channelsStore.loadChannels(this.space)
-        this.groupsStore.loadGroups(this.space)
+        if (!this.offline) {
+          this.roomsStore.initialize(this.space)
+        }
       } else {
-        this.threadsStore.tmid = false
+        // this.threadsStore.tmid = false
       }
     })
 
+    window.addEventListener('online', this.setOnline)
+    window.addEventListener('offline', this.setOffline)
+
     this.initialized = true
+  }
+
+  setOnline = () => {
+    console.log('setOnline')
+
+    this.offline = false
+  }
+
+  setOffline = () => {
+    console.log('setOffline')
+
+    this.offline = true
   }
 
   login = async (userId: string, authToken: string) => {
@@ -50,7 +62,7 @@ export class RootStore {
     await localForage.setItem('authToken', authToken)
 
     runInAction(() => {
-      this.space = new SpaceStore(this, `${SPACE_ID}${API_PATH}`, userId, authToken)
+      this.space = new SpaceStore(this, SPACE_ID, API_PATH, userId, authToken)
     })
   }
 

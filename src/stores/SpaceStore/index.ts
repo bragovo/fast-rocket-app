@@ -2,28 +2,33 @@ import { getClient } from "@tauri-apps/api/http";
 import { makeAutoObservable } from "mobx";
 import { nanoid } from "nanoid";
 import { RootStore } from "../RootStore";
+import { SubsStore } from "../SubsStore";
 // import { MessageData } from "app/models";
 
 export class SpaceStore {
   id = nanoid()
-  url: string
+  host: string
+  path: string
   authToken: string
   userId: string
   client = getClient()
+  subsStore: SubsStore
   rootStore: RootStore
 
-  constructor(rootStore: RootStore, url: string, userId: string, authToken: string) {
+  constructor(rootStore: RootStore, host: string, path: string, userId: string, authToken: string) {
     makeAutoObservable(this, { rootStore: false, client: false })
 
     this.rootStore = rootStore
-    this.url = url
+    this.host = host
+    this.path = path
     this.authToken = authToken
     this.userId = userId
+    this.subsStore = new SubsStore(this)
   }
 
   getRequest = async <T>(endpoint: string, query: Record<string, any>) => {
     const { data } = await (await this.client).get<T>(
-      `${this.url}${endpoint}`,
+      `${this.host}${this.path}${endpoint}`,
       {
         query,
         headers: {

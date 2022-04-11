@@ -7,3 +7,11 @@ export interface ChannelData {
   name: string
 }
 
+export interface GroupsData {
+  groups: GroupData[]
+}
+
+export interface GroupData {
+  _id: string
+  name: string
+}

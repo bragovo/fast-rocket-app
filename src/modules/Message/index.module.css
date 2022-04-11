@@ -1,4 +1,4 @@
-.message {
+.root {
   margin-bottom: var(--yr-s);
   display: grid;
   grid-template-columns: calc(var(--yr) * 8) 1fr;

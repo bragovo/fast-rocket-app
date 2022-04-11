@@ -4,11 +4,10 @@ import { BrowserRouter, Routes, Route, useNavigate, Outlet } from "react-router-
 
 import { Layout } from './Layout'
 import { Intro } from './modules/Intro'
-import { Channel } from './modules/Channel'
-import { Group } from './modules/Group'
 import { AddWorkspace } from './modules/AddWorkspace'
 import { observer } from 'mobx-react-lite';
 import { useRootContext } from './context'
+import { Room } from './modules/Room'
 
 const App: FC = observer(() => {
   const navigate = useNavigate()
@@ -43,12 +42,9 @@ const FastRocketApp: FC = observer(() => {
           <Route path="workspace" element={<Layout />}>
             <Route index element={<Intro />} />
 
-            <Route path="channels">
-              <Route path=":channelId" element={<Channel />} />
-            </Route>
-
-            <Route path="groups">
-              <Route path=":groupId" element={<Group />} />
+            <Route path="rooms/:roomId">
+              <Route index element={<Room />} />
+              <Route path=":threadId" element={<Room />} />
             </Route>
           </Route>
         </Route>
