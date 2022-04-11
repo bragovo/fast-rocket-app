@@ -2,7 +2,7 @@
   width: 100%;
 }
 
-.textarea {
+.in {
   appearance: none;
   background: rgb(var(--theme-bg-secondary-color));
   border: 0;
@@ -10,11 +10,9 @@
   box-shadow: inset 0 0 0 1px rgb(var(--theme-sp-color));
   width: 100%;
   padding: var(--yr-xs);
-  resize: none;
   font-size: inherit;
   line-height: inherit;
   color: rgb(var(--theme-fg-primary-color));
   outline: none;
   margin: 0;
-  height: calc(var(--yr) * (10 + 4));
 }
