@@ -1,4 +1,4 @@
-import { isPermissionGranted, requestPermission, sendNotification } from "@tauri-apps/api/notification";
+import { requestPermission, sendNotification } from "@tauri-apps/api/notification";
 import { makeAutoObservable } from "mobx";
 import { nanoid } from "nanoid";
 import { SubsStore } from "../../SubsStore";
@@ -15,7 +15,7 @@ export class NotificationStore {
 
     this.eventName = `${subsStore.spaceStore.userId}/notification`
     this.subsStore = subsStore
-    this.initialize()
+    void this.initialize()
   }
 
   initialize = async () => {

@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC, useEffect } from 'react'
 import * as ReactDOMClient from 'react-dom/client'
 import { BrowserRouter, Routes, Route, useNavigate, Outlet } from "react-router-dom"
 
@@ -14,7 +14,7 @@ const App: FC = observer(() => {
   const rootStore = useRootContext()
 
   useEffect(() => {
-    if (rootStore.space) {
+    if (rootStore.space !== false) {
       navigate("/workspace", { replace: true })
     } else {
       navigate("/", { replace: true })
@@ -55,7 +55,7 @@ const FastRocketApp: FC = observer(() => {
 
 const container = document.getElementById('app')
 
-if (container) {
+if (container != null) {
   const root = ReactDOMClient.createRoot(container)
   root.render(<FastRocketApp />);
 }

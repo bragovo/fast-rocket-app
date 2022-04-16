@@ -1,5 +1,4 @@
-import { makeAutoObservable } from "mobx";
-import { nanoid } from "nanoid";
+import { makeAutoObservable } from 'mobx'
 import { SpaceStore } from "../SpaceStore";
 import { NotificationStore } from "./NotificationStore";
 import { NotificationData } from "./NotificationStore/models";
@@ -85,7 +84,7 @@ export class SubsStore {
     this.ws.send(JSON.stringify({ msg: "ping" }))
 
     this.timeout = setTimeout(() => {
-      if (!this.alive) {
+      if (this.alive !== true) {
         if (this.ws.readyState !== WebSocket.OPEN && !this.spaceStore.rootStore.offline) {
           this.ws = new WebSocket(`${this.spaceStore.host.replace("https://", "wss://")}/websocket`);
           this.initialize()
@@ -99,26 +98,27 @@ export class SubsStore {
     }, ms)
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   processMessage = (event: MessageEvent<any>) => {
     const data = JSON.parse(event.data)
-    if(data["msg"] === "ping") {
+    if(data.msg === "ping") {
       this.ws.send(JSON.stringify({ msg: "pong" }))
-    } else if (data["msg"] === "pong") {
+    } else if (data.msg === "pong") {
       this.alive = true
-    } else if (data["msg"] === "ready") {
-      (data["subs"] as string[]).forEach((sub) => {
+    } else if (data.msg === "ready") {
+      (data.subs as string[]).forEach((sub) => {
         if (this.roomChangedStore.id === sub) {
           this.roomChangedStore.setReady(true)
         }
       })
-    } else if (data["msg"] === "result" && data["id"] === "1") {
+    } else if (data.msg === "result" && data.id === "1") {
       // this.roomChangedStore.initialize()
-    } else if (data["msg"] === "changed") {
-      if (data["collection"] === "stream-notify-user" && data["fields"].eventName === this.roomChangedStore.eventName) {
+    } else if (data.msg === "changed") {
+      if (data.collection === "stream-notify-user" && data.fields.eventName === this.roomChangedStore.eventName) {
         this.roomChangedStore.applyChange(data.fields.args[1] as ChangeData)
       }
 
-      if (data["collection"] === "stream-notify-user" && data["fields"].eventName === this.notificationStore.eventName) {
+      if (data.collection === "stream-notify-user" && data.fields.eventName === this.notificationStore.eventName) {
         console.log(data.fields.args[0])
         this.notificationStore.sendNotification(data.fields.args[0] as NotificationData)
       }

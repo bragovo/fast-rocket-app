@@ -1,14 +1,10 @@
-import { useRootContext } from "app/context";
 import { RoomStore } from "app/stores/RoomStore";
 import { observer } from "mobx-react-lite";
-import React, { FC, useMemo } from "react";
-import { Link } from "react-router-dom";
+import React, { FC } from "react";
 import { Message } from "../Message";
 import { Send } from "../Send";
 
 import s from './index.module.css'
-
-const { SNOWPACK_PUBLIC_SPACE_ID: SPACE_ID } = import.meta.env
 
 export const Messages: FC<{ roomStore: RoomStore }> = observer(({ roomStore }) =>  {
 

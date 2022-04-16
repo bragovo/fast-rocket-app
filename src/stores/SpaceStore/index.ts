@@ -26,6 +26,7 @@ export class SpaceStore {
     this.subsStore = new SubsStore(this)
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getRequest = async <T>(endpoint: string, query: Record<string, any>) => {
     const { data } = await (await this.client).get<T>(
       `${this.host}${this.path}${endpoint}`,

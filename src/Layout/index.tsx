@@ -1,6 +1,5 @@
 import { useRootContext } from "app/context"
 import { Thread } from "app/modules/Thread"
-import { ThreadStore } from "app/stores/ThreadStore"
 import { observer } from "mobx-react-lite"
 import React, { FC } from "react"
 import { Outlet } from "react-router-dom"
@@ -22,7 +21,7 @@ export const Layout: FC = observer(() => {
         <Outlet />
       </div>
 
-      {threadsStore.tmid &&
+      {threadsStore.tmid !== false &&
         <div className={s.thread}>
           <Thread />
         </div>

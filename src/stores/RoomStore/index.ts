@@ -26,18 +26,18 @@ export class RoomStore {
   }
 
   addMessage = (message: MessageData) => {
-    if (!this.messages[message._id]) {
+    if (this.messages[message._id] === undefined) {
       this.messages[message._id] = new MessageStore(message)
     }
   }
 
   loadMessages = () => {
-    if (this.type === 'group' && this.roomsStore.rootStore.space) {
-      this.loadGroupMessages(this.roomsStore.rootStore.space, this._id)
+    if (this.type === 'group' && this.roomsStore.rootStore.space !== false) {
+      void this.loadGroupMessages(this.roomsStore.rootStore.space, this._id)
     }
 
-    if (this.type === 'channel' && this.roomsStore.rootStore.space) {
-      this.loadChannelMessages(this.roomsStore.rootStore.space, this._id)
+    if (this.type === 'channel' && this.roomsStore.rootStore.space !== false) {
+      void this.loadChannelMessages(this.roomsStore.rootStore.space, this._id)
     }
   }
 
@@ -79,11 +79,11 @@ export class RoomStore {
     })
   }
 
-  get displayMessages() {
-    return Object.entries(this.messages).filter(o => !o[1].t).map(o => o[1])
+  get displayMessages(): MessageStore[] {
+    return Object.entries(this.messages).filter(o => o[1].t === undefined).map(o => o[1])
   }
 
-  get symbol () {
+  get symbol () : string {
     return this.type === "channel" ? "#" : "&"
   }
 }

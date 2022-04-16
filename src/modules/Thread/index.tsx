@@ -2,15 +2,14 @@ import { useRootContext } from "app/context";
 import { observer } from "mobx-react-lite";
 import React, { FC } from "react";
 import { Message } from "../Message";
-import { Messages } from "../Messages";
 
 import s from './index.module.css'
 
 export const Thread: FC = observer(() => {
   const { threadsStore } = useRootContext()
-  const threadStore = threadsStore.tmid && threadsStore.threads[threadsStore.tmid]
+  const threadStore = threadsStore.tmid !== false && threadsStore.threads[threadsStore.tmid]
 
-  if (!threadStore) return null
+  if (threadStore === false) return null
 
   return (
     <div className={s.root}>

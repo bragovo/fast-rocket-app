@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import React, { FC, useMemo } from "react";
+import React, { FC } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { useRootContext } from "app/context";
 import cc from 'classcat'
@@ -11,8 +11,8 @@ export const List: FC = observer(() => {
   const location = useLocation()
   const { roomsStore } = rootStore
 
-  const handleLogoutClick = () => {
-    rootStore.logout()
+  const handleLogoutClick = (): void => {
+    void rootStore.logout()
   }
 
   return (

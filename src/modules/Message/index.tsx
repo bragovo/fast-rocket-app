@@ -1,7 +1,6 @@
 import { MessageStore } from "app/stores/MessageStore";
-import { MessageData } from "app/stores/MessageStore/models";
 import { observer } from "mobx-react-lite";
-import React, { FC, useMemo } from "react";
+import React, { FC } from "react";
 import { Link } from "react-router-dom";
 
 import s from './index.module.css'
@@ -15,7 +14,7 @@ export const Message: FC<{ message: MessageStore, fis: boolean }> = observer(({ 
       <div className={s.avatar}>
         {fis &&
           <div className={s.image}>
-            <img src={`${SPACE_ID}/avatar/${message.u.username}`} />
+            <img src={`${SPACE_ID as string}/avatar/${message.u.username}`} />
           </div>
         }
       </div>
@@ -31,7 +30,7 @@ export const Message: FC<{ message: MessageStore, fis: boolean }> = observer(({ 
           {message.msg}
         </div>
 
-        {message.tcount && message.tcount > 0 &&
+        {message.tcount !== undefined && message.tcount > 0 &&
           <Link to={message._id} className={s.thread}>
             <div className={s.avs}>
               <div className={s.av} />

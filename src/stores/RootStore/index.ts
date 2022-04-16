@@ -17,7 +17,7 @@ export class RootStore {
   constructor(userId?: string, authToken?: string) {
     makeAutoObservable(this)
 
-    if (userId && authToken) {
+    if (userId !== undefined && authToken !== undefined) {
       this.space = new SpaceStore(this, SPACE_ID, API_PATH, userId, authToken)
     }
 
@@ -30,7 +30,7 @@ export class RootStore {
 
   initialize = () => {
     autorun(() => {
-      if (this.space) {
+      if (this.space !== false) {
         if (!this.offline) {
           this.roomsStore.initialize(this.space)
         }

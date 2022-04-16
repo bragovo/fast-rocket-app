@@ -17,9 +17,9 @@ export class ThreadsStore {
   }
 
   setThread = (tmid: string) => {
-    if (this.rootStore.space) {
-      if (!this.threads[tmid]) this.threads[tmid] = new ThreadStore()
-      this.loadThreadMessages(this.rootStore.space, tmid)
+    if (this.rootStore.space !== false) {
+      if (this.threads[tmid] === undefined) this.threads[tmid] = new ThreadStore()
+      void this.loadThreadMessages(this.rootStore.space, tmid)
     }
   }
 

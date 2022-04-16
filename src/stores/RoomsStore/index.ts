@@ -1,9 +1,6 @@
 import { makeAutoObservable, runInAction } from "mobx";
-// import { MessageData } from "app/models";
 import { RootStore } from "../RootStore";
 import { SpaceStore } from "../SpaceStore";
-// import { GroupsData } from "../GroupsStore/models";
-// import { ChannelsData } from "../ChannelsStore/models";
 import { RoomStore } from "../RoomStore";
 import { ChannelsData, GroupsData } from "./models";
 import { MessageData } from "../MessageStore/models";
@@ -19,8 +16,8 @@ export class RoomsStore {
   }
 
   initialize = (space: SpaceStore) => {
-    this.loadGroups(space)
-    this.loadChannels(space)
+    void this.loadGroups(space)
+    void this.loadChannels(space)
   }
 
   loadGroups = async (space: SpaceStore) => {
@@ -43,7 +40,7 @@ export class RoomsStore {
     })
   }
 
-  get displayRooms() {
+  get displayRooms(): RoomStore[] {
     return Object.entries(this.rooms).map(o => o[1]).sort((a, b) => {
       if(a.name.toLocaleLowerCase() < b.name.toLocaleLowerCase()) { return -1; }
       if(a.name.toLocaleLowerCase() > b.name.toLocaleLowerCase()) { return 1; }
@@ -52,9 +49,8 @@ export class RoomsStore {
   }
 
   addMessage = (roomId: string, message: MessageData) => {
-    if (this.rooms[roomId]) {
+    if (this.rooms[roomId] !== undefined) {
       this.rooms[roomId].addMessage(message)
-      // this.rooms[roomId] = new RoomStore(roomId)
     }
   }
 }

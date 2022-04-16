@@ -11,22 +11,22 @@ export const Room: FC = observer(() =>  {
   const { space, roomsStore, threadsStore } = useRootContext()
 
   useEffect(() =>  {
-    if (roomId && roomsStore.rooms[roomId]) {
+    if (roomId !== undefined && roomsStore.rooms[roomId] !== undefined) {
       roomsStore.rooms[roomId].loadMessages()
     }
   }, [roomId])
 
   useEffect(() => {
-    if (threadId) {
+    if (threadId !== undefined) {
       threadsStore.setThread(threadId)
     }
   }, [threadId])
 
-  if (!roomId || !space) return null;
+  if (roomId === undefined || space === undefined) return null;
 
   return (
     <div className={s.root}>
-      {roomsStore.rooms[roomId] &&
+      {roomsStore.rooms[roomId] !== undefined &&
         <>
           <div className={s.header}>
             {roomId} - {threadId}

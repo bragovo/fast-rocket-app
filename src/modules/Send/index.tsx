@@ -1,12 +1,11 @@
-import React, { FC, useRef, useState } from "react";
-import { createEditor } from 'slate'
+import React, { FC, useState } from "react";
+import { createEditor , BaseEditor, Descendant } from 'slate'
 import { Slate, Editable, withReact, ReactEditor } from 'slate-react'
-import { BaseEditor, Descendant } from 'slate'
 
 import s from './index.module.css'
 
-type CustomElement = { type: 'paragraph'; children: CustomText[] }
-type CustomText = { text: string; bold?: true }
+interface CustomElement { type: 'paragraph'; children: CustomText[] }
+interface CustomText { text: string; bold?: true }
 
 declare module 'slate' {
   interface CustomTypes {
@@ -24,7 +23,7 @@ const initialValue: Descendant[] = [
 ]
 
 export const Send: FC = () => {
-  const textareaRef = useRef(null)
+  // const textareaRef = useRef(null)
   const [editor] = useState(() => withReact(createEditor()))
 
   // const handleTextareaInput = (e: ChangeEvent<HTMLTextAreaElement>) => {
