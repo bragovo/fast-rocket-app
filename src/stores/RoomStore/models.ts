@@ -1,5 +1,5 @@
 import { MessageData } from "../MessageStore/models";
 
-export interface RoomData {
+export interface MessagesData {
   messages: MessageData[]
 }

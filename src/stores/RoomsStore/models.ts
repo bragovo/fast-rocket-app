@@ -1,17 +1,13 @@
 export interface ChannelsData {
-  channels: ChannelData[]
-}
-
-export interface ChannelData {
-  _id: string
-  name: string
+  channels: RoomData[]
 }
 
 export interface GroupsData {
-  groups: GroupData[]
+  groups: RoomData[]
 }
 
-export interface GroupData {
+export interface RoomData {
   _id: string
   name: string
+  ro?: boolean
 }

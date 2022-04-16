@@ -1,6 +1,8 @@
 import { makeAutoObservable } from "mobx";
 import { nanoid } from "nanoid";
 import { SpaceStore } from "../SpaceStore";
+import { NotificationStore } from "./NotificationStore";
+import { NotificationData } from "./NotificationStore/models";
 import { RoomChangedStore } from "./RoomChangedStore";
 import { ChangeData } from "./RoomChangedStore/models";
 
@@ -13,6 +15,7 @@ export class SubsStore {
   alive?: boolean
   timeout?: NodeJS.Timeout
   roomChangedStore: RoomChangedStore
+  notificationStore: NotificationStore
   // subs: Record<string, RoomChangedStore> = {}
 
   constructor(spaceStore: SpaceStore) {
@@ -23,6 +26,7 @@ export class SubsStore {
     this.url = `${spaceStore.host.replace("https://", "wss://")}/websocket`
     this.ws = new WebSocket(this.url);
     this.roomChangedStore = new RoomChangedStore(this)
+    this.notificationStore = new NotificationStore(this)
     this.initialize()
   }
 
@@ -50,18 +54,24 @@ export class SubsStore {
 
       this.ws.send(JSON.stringify({
         msg: "sub",
-        id: nanoid(),
+        id: this.notificationStore.id,
         name: "stream-notify-user",
-        params: [`${this.spaceStore.userId}/rooms-changed`, false]
+        params: [this.notificationStore.eventName, false]
       }))
 
-      this.ws.send(JSON.stringify({
-        msg: "sub",
-        id: nanoid(),
-        name: "stream-notify-user",
-        params: [`${this.spaceStore.userId}/notification`, false]
-      }));
+      // this.ws.send(JSON.stringify({
+      //   msg: "sub",
+      //   id: nanoid(),
+      //   name: "stream-notify-user",
+      //   params: [`${this.spaceStore.userId}/rooms-changed`, false]
+      // }))
 
+      // this.ws.send(JSON.stringify({
+      //   msg: "sub",
+      //   id: nanoid(),
+      //   name: "stream-notify-user",
+      //   params: [`${this.spaceStore.userId}/notification`, false]
+      // }));
 
       this.heartbeat(10000)
     })
@@ -106,6 +116,11 @@ export class SubsStore {
     } else if (data["msg"] === "changed") {
       if (data["collection"] === "stream-notify-user" && data["fields"].eventName === this.roomChangedStore.eventName) {
         this.roomChangedStore.applyChange(data.fields.args[1] as ChangeData)
+      }
+
+      if (data["collection"] === "stream-notify-user" && data["fields"].eventName === this.notificationStore.eventName) {
+        console.log(data.fields.args[0])
+        this.notificationStore.sendNotification(data.fields.args[0] as NotificationData)
       }
 
     } else {

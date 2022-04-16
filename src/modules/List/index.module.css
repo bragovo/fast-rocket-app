@@ -23,8 +23,8 @@
   background: rgb(var(--theme-sp-color));
 }
 
-
-.push, .logout {
+.logout {
   margin-top: var(--yr-m);
   text-align: center;
 }
+

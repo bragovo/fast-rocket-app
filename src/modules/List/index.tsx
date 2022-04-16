@@ -11,10 +11,6 @@ export const List: FC = observer(() => {
   const location = useLocation()
   const { roomsStore } = rootStore
 
-  const handlePushClick = () => {
-    new Notification('title', { body: 'some text' })
-  }
-
   const handleLogoutClick = () => {
     rootStore.logout()
   }
@@ -28,10 +24,6 @@ export const List: FC = observer(() => {
           </NavLink>
         </div>
       )}
-
-      <div className={s.push}>
-        <button type="button" onClick={handlePushClick}>Test Pushes</button>
-      </div>
 
       <div className={s.logout}>
         <button type="button" onClick={handleLogoutClick}>Logout</button>

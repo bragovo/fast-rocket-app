@@ -28,7 +28,7 @@ export class RoomsStore {
 
     runInAction(() => {
       data.groups.forEach(group => {
-        this.rooms[group._id] = new RoomStore(group._id, "group", group.name, this)
+        this.rooms[group._id] = new RoomStore(group, "group", this)
       })
     })
   }
@@ -38,7 +38,7 @@ export class RoomsStore {
 
     runInAction(() => {
       data.channels.forEach(channel => {
-        this.rooms[channel._id] = new RoomStore(channel._id, "channel", channel.name, this)
+        this.rooms[channel._id] = new RoomStore(channel, "channel", this)
       })
     })
   }

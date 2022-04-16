@@ -3,22 +3,25 @@ import { makeAutoObservable, runInAction } from "mobx";
 import { MessageStore } from "../MessageStore";
 import { MessageData } from "../MessageStore/models";
 import { RoomsStore } from "../RoomsStore";
+import { RoomData } from "../RoomsStore/models";
 import { SpaceStore } from "../SpaceStore";
-import { RoomData } from "./models";
+import { MessagesData } from "./models";
 
 export class RoomStore {
   _id: string
   type: 'group' | 'channel'
   name: string
+  ro = false
   messages: Record<string, MessageStore> = {}
   roomsStore: RoomsStore
 
-  constructor(roomId: string, type: 'group' | 'channel', name: string, roomStore: RoomsStore) {
+  constructor(room: RoomData, type: 'group' | 'channel', roomStore: RoomsStore) {
     makeAutoObservable(this, { roomsStore: false })
 
-    this._id = roomId
+    this._id = room._id
     this.type = type
-    this.name = name
+    this.name = room.name
+    this.ro = room.ro === true
     this.roomsStore = roomStore
   }
 
@@ -39,7 +42,7 @@ export class RoomStore {
   }
 
   loadGroupMessages = async (space: SpaceStore, groupId: string) => {
-    const data = await space.getRequest<RoomData>(
+    const data = await space.getRequest<MessagesData>(
       "/groups.messages",
       {
         roomId: groupId,
@@ -58,7 +61,7 @@ export class RoomStore {
   }
 
   loadChannelMessages = async (space: SpaceStore, channelId: string) => {
-    const data = await space.getRequest<RoomData>(
+    const data = await space.getRequest<MessagesData>(
       "/channels.messages",
       {
         roomId: channelId,
