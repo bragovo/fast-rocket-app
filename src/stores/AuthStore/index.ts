@@ -4,7 +4,7 @@ export class AuthStore {
   authToken: string
   userId: string
 
-  constructor (userId: string, authToken: string) {
+  constructor(userId: string, authToken: string) {
     this.authToken = userId
     this.userId = authToken
 

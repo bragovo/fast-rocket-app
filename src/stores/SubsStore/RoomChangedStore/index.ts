@@ -1,7 +1,7 @@
-import { makeAutoObservable } from "mobx";
-import { nanoid } from "nanoid";
-import { SubsStore } from "../../SubsStore";
-import { ChangeData } from "./models";
+import { makeAutoObservable } from "mobx"
+import { nanoid } from "nanoid"
+import { SubsStore } from "../../SubsStore"
+import { ChangeData } from "./models"
 // import { SpaceStore } from "../SpaceStore";
 
 export class RoomChangedStore {
@@ -19,7 +19,6 @@ export class RoomChangedStore {
 
   initialize = () => {
     // this.subsStore.ws.addEventListener('open', () => {
-
     // })
   }
 

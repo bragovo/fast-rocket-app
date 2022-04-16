@@ -5,8 +5,8 @@ import React, { FC } from "react"
 import { Outlet } from "react-router-dom"
 import { List } from "../modules/List"
 
-import './app.css'
-import s from './index.module.css'
+import "./app.css"
+import s from "./index.module.css"
 
 export const Layout: FC = observer(() => {
   const { threadsStore } = useRootContext()
@@ -21,11 +21,11 @@ export const Layout: FC = observer(() => {
         <Outlet />
       </div>
 
-      {threadsStore.tmid !== false &&
+      {threadsStore.tmid !== false && (
         <div className={s.thread}>
           <Thread />
         </div>
-      }
+      )}
     </div>
   )
 })

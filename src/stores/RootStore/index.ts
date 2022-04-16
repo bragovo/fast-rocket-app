@@ -1,9 +1,9 @@
-import { autorun, makeAutoObservable, runInAction } from "mobx";
-import localForage from "localforage";
+import { autorun, makeAutoObservable, runInAction } from "mobx"
+import localForage from "localforage"
 
-import { ThreadsStore } from "../ThreadsStore";
-import { SpaceStore } from "../SpaceStore";
-import { RoomsStore } from "../RoomsStore";
+import { ThreadsStore } from "../ThreadsStore"
+import { SpaceStore } from "../SpaceStore"
+import { RoomsStore } from "../RoomsStore"
 
 const { SNOWPACK_PUBLIC_SPACE_ID: SPACE_ID, SNOWPACK_PUBLIC_API_PATH: API_PATH } = import.meta.env
 
@@ -27,7 +27,6 @@ export class RootStore {
     this.initialize()
   }
 
-
   initialize = () => {
     autorun(() => {
       if (this.space !== false) {
@@ -39,27 +38,27 @@ export class RootStore {
       }
     })
 
-    window.addEventListener('online', this.setOnline)
-    window.addEventListener('offline', this.setOffline)
+    window.addEventListener("online", this.setOnline)
+    window.addEventListener("offline", this.setOffline)
 
     this.initialized = true
   }
 
   setOnline = () => {
-    console.log('setOnline')
+    console.log("setOnline")
 
     this.offline = false
   }
 
   setOffline = () => {
-    console.log('setOffline')
+    console.log("setOffline")
 
     this.offline = true
   }
 
   login = async (userId: string, authToken: string) => {
-    await localForage.setItem('userId', userId)
-    await localForage.setItem('authToken', authToken)
+    await localForage.setItem("userId", userId)
+    await localForage.setItem("authToken", authToken)
 
     runInAction(() => {
       this.space = new SpaceStore(this, SPACE_ID, API_PATH, userId, authToken)
@@ -68,10 +67,10 @@ export class RootStore {
 
   // TODO: Clean up channels and other stores!!
   logout = async () => {
-    await localForage.removeItem('authToken')
-    await localForage.removeItem('userId')
+    await localForage.removeItem("authToken")
+    await localForage.removeItem("userId")
 
-    runInAction(() =>  {
+    runInAction(() => {
       this.space = false
     })
   }

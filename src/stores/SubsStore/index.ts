@@ -1,9 +1,9 @@
-import { makeAutoObservable } from 'mobx'
-import { SpaceStore } from "../SpaceStore";
-import { NotificationStore } from "./NotificationStore";
-import { NotificationData } from "./NotificationStore/models";
-import { RoomChangedStore } from "./RoomChangedStore";
-import { ChangeData } from "./RoomChangedStore/models";
+import { makeAutoObservable } from "mobx"
+import { SpaceStore } from "../SpaceStore"
+import { NotificationStore } from "./NotificationStore"
+import { NotificationData } from "./NotificationStore/models"
+import { RoomChangedStore } from "./RoomChangedStore"
+import { ChangeData } from "./RoomChangedStore/models"
 
 export class SubsStore {
   spaceStore: SpaceStore
@@ -23,40 +23,48 @@ export class SubsStore {
     this.spaceStore = spaceStore
     this.alive = !spaceStore.rootStore.offline
     this.url = `${spaceStore.host.replace("https://", "wss://")}/websocket`
-    this.ws = new WebSocket(this.url);
+    this.ws = new WebSocket(this.url)
     this.roomChangedStore = new RoomChangedStore(this)
     this.notificationStore = new NotificationStore(this)
     this.initialize()
   }
 
   initialize = () => {
-    this.ws.addEventListener('open', () =>  {
-      this.ws.send(JSON.stringify({
-        msg: "connect",
-        version: "1",
-        support: ["1"]
-      }))
+    this.ws.addEventListener("open", () => {
+      this.ws.send(
+        JSON.stringify({
+          msg: "connect",
+          version: "1",
+          support: ["1"],
+        })
+      )
 
-      this.ws.send(JSON.stringify({
-        msg: "method",
-        method: "login",
-        id: "1",
-        params: [{ resume: this.spaceStore.authToken }]
-      }))
+      this.ws.send(
+        JSON.stringify({
+          msg: "method",
+          method: "login",
+          id: "1",
+          params: [{ resume: this.spaceStore.authToken }],
+        })
+      )
 
-      this.ws.send(JSON.stringify({
-        msg: "sub",
-        id: this.roomChangedStore.id,
-        name: "stream-notify-user",
-        params: [this.roomChangedStore.eventName, false]
-      }))
+      this.ws.send(
+        JSON.stringify({
+          msg: "sub",
+          id: this.roomChangedStore.id,
+          name: "stream-notify-user",
+          params: [this.roomChangedStore.eventName, false],
+        })
+      )
 
-      this.ws.send(JSON.stringify({
-        msg: "sub",
-        id: this.notificationStore.id,
-        name: "stream-notify-user",
-        params: [this.notificationStore.eventName, false]
-      }))
+      this.ws.send(
+        JSON.stringify({
+          msg: "sub",
+          id: this.notificationStore.id,
+          name: "stream-notify-user",
+          params: [this.notificationStore.eventName, false],
+        })
+      )
 
       // this.ws.send(JSON.stringify({
       //   msg: "sub",
@@ -75,7 +83,7 @@ export class SubsStore {
       this.heartbeat(10000)
     })
 
-    this.ws.addEventListener('message', this.processMessage);
+    this.ws.addEventListener("message", this.processMessage)
   }
 
   // TODO: R&D for heartbeat
@@ -86,7 +94,7 @@ export class SubsStore {
     this.timeout = setTimeout(() => {
       if (this.alive !== true) {
         if (this.ws.readyState !== WebSocket.OPEN && !this.spaceStore.rootStore.offline) {
-          this.ws = new WebSocket(`${this.spaceStore.host.replace("https://", "wss://")}/websocket`);
+          this.ws = new WebSocket(`${this.spaceStore.host.replace("https://", "wss://")}/websocket`)
           this.initialize()
         } else {
           this.ws.close()
@@ -101,12 +109,12 @@ export class SubsStore {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   processMessage = (event: MessageEvent<any>) => {
     const data = JSON.parse(event.data)
-    if(data.msg === "ping") {
+    if (data.msg === "ping") {
       this.ws.send(JSON.stringify({ msg: "pong" }))
     } else if (data.msg === "pong") {
       this.alive = true
     } else if (data.msg === "ready") {
-      (data.subs as string[]).forEach((sub) => {
+      ;(data.subs as string[]).forEach((sub) => {
         if (this.roomChangedStore.id === sub) {
           this.roomChangedStore.setReady(true)
         }
@@ -122,7 +130,6 @@ export class SubsStore {
         console.log(data.fields.args[0])
         this.notificationStore.sendNotification(data.fields.args[0] as NotificationData)
       }
-
     } else {
       console.log(data)
     }

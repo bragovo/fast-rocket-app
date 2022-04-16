@@ -1,13 +1,19 @@
-import React, { FC, useState } from "react";
-import { createEditor , BaseEditor, Descendant } from 'slate'
-import { Slate, Editable, withReact, ReactEditor } from 'slate-react'
+import React, { FC, useState } from "react"
+import { createEditor, BaseEditor, Descendant } from "slate"
+import { Slate, Editable, withReact, ReactEditor } from "slate-react"
 
-import s from './index.module.css'
+import s from "./index.module.css"
 
-interface CustomElement { type: 'paragraph'; children: CustomText[] }
-interface CustomText { text: string; bold?: true }
+interface CustomElement {
+  type: "paragraph"
+  children: CustomText[]
+}
+interface CustomText {
+  text: string
+  bold?: true
+}
 
-declare module 'slate' {
+declare module "slate" {
   interface CustomTypes {
     Editor: BaseEditor & ReactEditor
     Element: CustomElement
@@ -17,8 +23,8 @@ declare module 'slate' {
 
 const initialValue: Descendant[] = [
   {
-    type: 'paragraph',
-    children: [{ text: 'A line of text in a paragraph.' }],
+    type: "paragraph",
+    children: [{ text: "A line of text in a paragraph." }],
   },
 ]
 

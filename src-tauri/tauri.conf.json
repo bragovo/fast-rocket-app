@@ -14,9 +14,7 @@
       "active": true,
       "targets": "all",
       "identifier": "app.rocket.fast",
-      "icon": [
-        "icons/icon.ico"
-      ],
+      "icon": ["icons/icon.ico"],
       "resources": [],
       "externalBin": [],
       "copyright": "",

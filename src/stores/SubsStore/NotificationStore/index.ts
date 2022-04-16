@@ -1,8 +1,8 @@
-import { requestPermission, sendNotification } from "@tauri-apps/api/notification";
-import { makeAutoObservable } from "mobx";
-import { nanoid } from "nanoid";
-import { SubsStore } from "../../SubsStore";
-import { NotificationData } from "./models";
+import { requestPermission, sendNotification } from "@tauri-apps/api/notification"
+import { makeAutoObservable } from "mobx"
+import { nanoid } from "nanoid"
+import { SubsStore } from "../../SubsStore"
+import { NotificationData } from "./models"
 
 export class NotificationStore {
   id = nanoid()
@@ -29,13 +29,12 @@ export class NotificationStore {
   sendNotification = (args: NotificationData) => {
     console.log({
       title: args.title,
-      body: args.text
+      body: args.text,
     })
-
 
     sendNotification({
       title: args.title,
-      body: args.text
+      body: args.text,
     })
   }
 }

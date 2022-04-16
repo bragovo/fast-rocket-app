@@ -8,5 +8,3 @@ export interface UserData {
   authToken: string
   userId: string
 }
-
-

@@ -36,13 +36,14 @@
 body {
   font-size: var(--fs-base);
   line-height: var(--lh-base);
-  font-family: 'IBM Plex Sans', sans-serif;
+  font-family: "IBM Plex Sans", sans-serif;
   font-weight: 400;
   background: rgb(var(--theme-bg-primary-color));
   color: rgb(var(--theme-fg-primary-color));
 }
 
-html, body {
+html,
+body {
   width: 100%;
   margin: 0;
   padding: 0;
@@ -54,7 +55,8 @@ html {
   height: 100%;
 }
 
-#app, body {
+#app,
+body {
   height: 100%;
   margin: 0;
 }

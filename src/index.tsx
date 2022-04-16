@@ -1,13 +1,13 @@
-import React, { FC, useEffect } from 'react'
-import * as ReactDOMClient from 'react-dom/client'
+import React, { FC, useEffect } from "react"
+import * as ReactDOMClient from "react-dom/client"
 import { BrowserRouter, Routes, Route, useNavigate, Outlet } from "react-router-dom"
 
-import { Layout } from './Layout'
-import { Intro } from './modules/Intro'
-import { AddWorkspace } from './modules/AddWorkspace'
-import { observer } from 'mobx-react-lite';
-import { useRootContext } from './context'
-import { Room } from './modules/Room'
+import { Layout } from "./Layout"
+import { Intro } from "./modules/Intro"
+import { AddWorkspace } from "./modules/AddWorkspace"
+import { observer } from "mobx-react-lite"
+import { useRootContext } from "./context"
+import { Room } from "./modules/Room"
 
 const App: FC = observer(() => {
   const navigate = useNavigate()
@@ -31,7 +31,7 @@ const App: FC = observer(() => {
 const FastRocketApp: FC = observer(() => {
   const rootStore = useRootContext()
 
-  if(!rootStore.initialized) return null
+  if (!rootStore.initialized) return null
 
   return (
     <BrowserRouter>
@@ -53,9 +53,9 @@ const FastRocketApp: FC = observer(() => {
   )
 })
 
-const container = document.getElementById('app')
+const container = document.getElementById("app")
 
 if (container != null) {
   const root = ReactDOMClient.createRoot(container)
-  root.render(<FastRocketApp />);
+  root.render(<FastRocketApp />)
 }

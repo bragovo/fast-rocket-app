@@ -8,7 +8,8 @@
   margin: 0 auto;
 }
 
-.in, .button {
+.in,
+.button {
   appearance: none;
   display: block;
   color: rgb(var(--theme-fg-primary-color));
@@ -40,5 +41,3 @@
 .add {
   /* display: flex; */
 }
-
-

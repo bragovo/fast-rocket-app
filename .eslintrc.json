@@ -1,0 +1,8 @@
+{
+  "root": true,
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "extends": ["standard-with-typescript", "plugin:@typescript-eslint/recommended", "prettier"],
+  "ignorePatterns": ["build/*", "node_modules/*", "src-tauri/target/*"]
+}

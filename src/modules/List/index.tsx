@@ -1,10 +1,10 @@
-import { observer } from "mobx-react-lite";
-import React, { FC } from "react";
-import { NavLink, useLocation } from "react-router-dom";
-import { useRootContext } from "app/context";
-import cc from 'classcat'
+import { observer } from "mobx-react-lite"
+import React, { FC } from "react"
+import { NavLink, useLocation } from "react-router-dom"
+import { useRootContext } from "app/context"
+import cc from "classcat"
 
-import s from './index.module.css';
+import s from "./index.module.css"
 
 export const List: FC = observer(() => {
   const rootStore = useRootContext()
@@ -17,21 +17,24 @@ export const List: FC = observer(() => {
 
   return (
     <div className={s.root}>
-      {roomsStore.displayRooms.map(roomStore =>
+      {roomsStore.displayRooms.map((roomStore) => (
         <div className={s.item} key={roomStore._id}>
-          <NavLink to={`/workspace/rooms/${roomStore._id}`} className={({ isActive }) => cc([s.link, { [s.active]: isActive }])}>
+          <NavLink
+            to={`/workspace/rooms/${roomStore._id}`}
+            className={({ isActive }) => cc([s.link, { [s.active]: isActive }])}
+          >
             {roomStore.symbol} {roomStore.name}
           </NavLink>
         </div>
-      )}
+      ))}
 
       <div className={s.logout}>
-        <button type="button" onClick={handleLogoutClick}>Logout</button>
+        <button type="button" onClick={handleLogoutClick}>
+          Logout
+        </button>
       </div>
 
-      <div>
-        {location.pathname}
-      </div>
+      <div>{location.pathname}</div>
     </div>
   )
 })

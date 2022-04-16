@@ -23,7 +23,7 @@
 
 .thread::before {
   position: absolute;
-  content: '';
+  content: "";
   display: block;
   left: 0;
   top: 10%;
