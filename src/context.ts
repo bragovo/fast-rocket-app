@@ -8,9 +8,7 @@ const loadSpaceFromStorage = async (): Promise<{ userId: string | null; authToke
   return { userId, authToken }
 }
 
-const { userId, authToken } = await loadSpaceFromStorage()
-
-const rootStore = new RootStore(userId ?? undefined, authToken ?? undefined)
+const rootStore = new RootStore(loadSpaceFromStorage)
 
 export function useRootContext(): RootStore {
   return rootStore

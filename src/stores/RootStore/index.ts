@@ -14,12 +14,14 @@ export class RootStore {
   threadsStore: ThreadsStore
   offline = false
 
-  constructor(userId?: string, authToken?: string) {
+  constructor(loadSpaceFromStorage: () => Promise<{ userId: string | null; authToken: string | null }>) {
     makeAutoObservable(this)
 
-    if (userId !== undefined && authToken !== undefined) {
-      this.space = new SpaceStore(this, SPACE_ID, API_PATH, userId, authToken)
-    }
+    void loadSpaceFromStorage().then(({ userId, authToken }) => {
+      if (userId !== null && authToken !== null) {
+        this.space = new SpaceStore(this, SPACE_ID, API_PATH, userId, authToken)
+      }
+    })
 
     this.threadsStore = new ThreadsStore(this)
     this.roomsStore = new RoomsStore(this)

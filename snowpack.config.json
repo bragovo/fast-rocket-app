@@ -10,9 +10,9 @@
   },
   "plugins": ["@snowpack/plugin-dotenv", "@snowpack/plugin-typescript", "@snowpack/plugin-postcss"],
   "optimize": {
-    "bundle": false,
+    "bundle": true,
     "minify": true,
-    "target": "es2018"
+    "target": "esnext"
   },
   "devOptions": {
     "open": "none"
