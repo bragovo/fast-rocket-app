@@ -12,9 +12,9 @@ jobs:
         run: |
           yarn --frozen-lockfile
           yarn tauri build
-      - name: Push to Drive
-        uses: deka0106/upload-to-dropbox@v2
-        with:
-          dropbox_access_token: ${{ secrets.DROPBOX_ACCESS_TOKEN }}
-          src: ./src-tauri/target/release/bundle/macos/fast-rocket-app.app
-          dest: /thesis/
+      # - name: Push to Drive
+      #   uses: deka0106/upload-to-dropbox@v2
+      #   with:
+      #     dropbox_access_token: ${{ secrets.DROPBOX_ACCESS_TOKEN }}
+      #     src: ./src-tauri/target/release/bundle/macos/fast-rocket-app.app
+      #     dest: /thesis/
