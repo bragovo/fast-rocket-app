@@ -12,6 +12,7 @@
     "@snowpack/plugin-postcss": "^1.4.3",
     "@snowpack/plugin-typescript": "^1.2.1",
     "@tauri-apps/cli": "^1.0.0-rc.8",
+    "@tauri-apps/tauricon": "github:tauri-apps/tauricon",
     "@types/react": "^17.0.43",
     "@types/react-dom": "^17.0.14",
     "@types/snowpack-env": "^2.3.4",
