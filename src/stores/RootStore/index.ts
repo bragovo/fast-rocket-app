@@ -18,9 +18,11 @@ export class RootStore {
     makeAutoObservable(this)
 
     void loadSpaceFromStorage().then(({ userId, authToken }) => {
-      if (userId !== null && authToken !== null) {
-        this.space = new SpaceStore(this, SPACE_ID, API_PATH, userId, authToken)
-      }
+      runInAction(() => {
+        if (userId !== null && authToken !== null) {
+          this.space = new SpaceStore(this, SPACE_ID, API_PATH, userId, authToken)
+        }
+      })
     })
 
     this.threadsStore = new ThreadsStore(this)
