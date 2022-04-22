@@ -44,7 +44,7 @@ const FastRocketApp: FC = observer(() => {
 
             <Route path="rooms/:roomId">
               <Route index element={<Room />} />
-              <Route path=":threadId" element={<Room />} />
+              {/* <Route path=":threadId" element={<Room />} /> */}
             </Route>
           </Route>
         </Route>

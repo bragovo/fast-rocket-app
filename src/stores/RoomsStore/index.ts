@@ -27,7 +27,7 @@ export class RoomsStore {
 
     runInAction(() => {
       data.update.forEach((sub) => {
-        this.rooms[sub._id] = new RoomStore(sub, this)
+        this.rooms[sub.rid] = new RoomStore(sub, this)
       })
     })
   }

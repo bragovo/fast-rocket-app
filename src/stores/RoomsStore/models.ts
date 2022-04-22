@@ -19,7 +19,7 @@ export interface SubscriptionsData {
 }
 
 export interface SubscriptionData {
-  _id: string
+  rid: string
   name: string
   alert: boolean
   unread: number

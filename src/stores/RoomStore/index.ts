@@ -18,7 +18,7 @@ export class RoomStore {
   constructor(room: SubscriptionData, roomStore: RoomsStore) {
     makeAutoObservable(this, { roomsStore: false })
 
-    this._id = room._id
+    this._id = room.rid
     this.type = room.t
     this.name = room.name
     this.alert = room.alert
