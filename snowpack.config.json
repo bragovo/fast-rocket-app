@@ -10,7 +10,7 @@
   },
   "plugins": ["@snowpack/plugin-dotenv", "@snowpack/plugin-typescript", "@snowpack/plugin-postcss"],
   "optimize": {
-    "bundle": true,
+    "bundle": false,
     "minify": true,
     "target": "esnext"
   },
