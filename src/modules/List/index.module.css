@@ -26,3 +26,7 @@
   margin-top: var(--yr-m);
   text-align: center;
 }
+
+.alert {
+  font-weight: 600;
+}

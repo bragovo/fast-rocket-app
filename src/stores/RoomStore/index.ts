@@ -1,27 +1,28 @@
 import { makeAutoObservable, runInAction } from "mobx"
-// import { MessageData } from "app/models";
 import { MessageStore } from "../MessageStore"
 import { MessageData } from "../MessageStore/models"
 import { RoomsStore } from "../RoomsStore"
-import { RoomData } from "../RoomsStore/models"
+import { SubscriptionData } from "../RoomsStore/models"
 import { SpaceStore } from "../SpaceStore"
-import { MessagesData } from "./models"
+import { MessagesData, RoomType } from "./models"
 
 export class RoomStore {
   _id: string
-  type: "group" | "channel"
+  type: RoomType
   name: string
-  ro = false
+  alert: boolean
+  unread: number
   messages: Record<string, MessageStore> = {}
   roomsStore: RoomsStore
 
-  constructor(room: RoomData, type: "group" | "channel", roomStore: RoomsStore) {
+  constructor(room: SubscriptionData, roomStore: RoomsStore) {
     makeAutoObservable(this, { roomsStore: false })
 
     this._id = room._id
-    this.type = type
+    this.type = room.t
     this.name = room.name
-    this.ro = room.ro === true
+    this.alert = room.alert
+    this.unread = room.unread
     this.roomsStore = roomStore
   }
 
@@ -32,11 +33,11 @@ export class RoomStore {
   }
 
   loadMessages = () => {
-    if (this.type === "group" && this.roomsStore.rootStore.space !== false) {
+    if (this.type === "p" && this.roomsStore.rootStore.space !== false) {
       void this.loadGroupMessages(this.roomsStore.rootStore.space, this._id)
     }
 
-    if (this.type === "channel" && this.roomsStore.rootStore.space !== false) {
+    if (this.type === "c" && this.roomsStore.rootStore.space !== false) {
       void this.loadChannelMessages(this.roomsStore.rootStore.space, this._id)
     }
   }
@@ -80,6 +81,14 @@ export class RoomStore {
   }
 
   get symbol(): string {
-    return this.type === "channel" ? "#" : "&"
+    return this.type === "c" ? "#" : "&"
+  }
+
+  get isAlert(): boolean {
+    return this.alert || this.unread > 0
+  }
+
+  get isRoom(): boolean {
+    return this.type === "c" || this.type === "p"
   }
 }

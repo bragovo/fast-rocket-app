@@ -2,7 +2,7 @@ import { makeAutoObservable, runInAction } from "mobx"
 import { RootStore } from "../RootStore"
 import { SpaceStore } from "../SpaceStore"
 import { RoomStore } from "../RoomStore"
-import { ChannelsData, GroupsData } from "./models"
+import { SubscriptionsData } from "./models"
 import { MessageData } from "../MessageStore/models"
 
 export class RoomsStore {
@@ -16,33 +16,46 @@ export class RoomsStore {
   }
 
   initialize = (space: SpaceStore) => {
-    void this.loadGroups(space)
-    void this.loadChannels(space)
+    // void this.loadGroups(space)
+    // void this.loadChannels(space)
+    void this.loadSubscriptions(space)
   }
 
-  loadGroups = async (space: SpaceStore) => {
-    const data = await space.getRequest<GroupsData>("/groups.list", {})
+  loadSubscriptions = async (space: SpaceStore) => {
+    const data = await space.getRequest<SubscriptionsData>("/subscriptions.get", {})
+    console.log(data)
 
     runInAction(() => {
-      data.groups.forEach((group) => {
-        this.rooms[group._id] = new RoomStore(group, "group", this)
+      data.update.forEach((sub) => {
+        this.rooms[sub._id] = new RoomStore(sub, this)
       })
     })
   }
 
-  loadChannels = async (space: SpaceStore) => {
-    const data = await space.getRequest<ChannelsData>("/channels.list.joined", {})
+  // loadGroups = async (space: SpaceStore) => {
+  //   const data = await space.getRequest<GroupsData>("/groups.list", {})
 
-    runInAction(() => {
-      data.channels.forEach((channel) => {
-        this.rooms[channel._id] = new RoomStore(channel, "channel", this)
-      })
-    })
-  }
+  //   runInAction(() => {
+  //     data.groups.forEach((group) => {
+  //       this.rooms[group._id] = new RoomStore(group, "group", this)
+  //     })
+  //   })
+  // }
+
+  // loadChannels = async (space: SpaceStore) => {
+  //   const data = await space.getRequest<ChannelsData>("/channels.list.joined", {})
+
+  //   runInAction(() => {
+  //     data.channels.forEach((channel) => {
+  //       this.rooms[channel._id] = new RoomStore(channel, "channel", this)
+  //     })
+  //   })
+  // }
 
   get displayRooms(): RoomStore[] {
     return Object.entries(this.rooms)
       .map((o) => o[1])
+      .filter((room) => room.isRoom)
       .sort((a, b) => {
         if (a.name.toLocaleLowerCase() < b.name.toLocaleLowerCase()) {
           return -1
