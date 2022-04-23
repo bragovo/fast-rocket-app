@@ -35,6 +35,8 @@ export const Account: FC = observer(() => {
         }
       }
 
+      console.log(space)
+
       setInitialized(true)
     }
 
