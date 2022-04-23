@@ -10,11 +10,5 @@ jobs:
       - uses: actions/checkout@v3
       - run: yarn --frozen-lockfile
       - run: yarn eslint .
-
-  prettier:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v3
-      - run: yarn --frozen-lockfile
       - run: yarn prettier -c .
+      - run: yarn tsc --project tsconfig.json

@@ -24,7 +24,7 @@ export const Account: FC = observer(() => {
   const { register, watch, getValues, reset } = useForm<FormData>({ defaultValues: { desktopNotifications: "all" } })
 
   useEffect(() => {
-    const _loadData = async (space: SpaceStore): Promise<void> => {
+    const _loadData = async (space: FormData): Promise<void> => {
       const data = await space.getRequest<PreferencesData>("/users.getPreferences", {})
 
       if (data.success) {
