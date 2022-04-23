@@ -1,3 +1,7 @@
+.root {
+  padding: var(--yr-m) var(--xr);
+}
+
 .message {
   margin-bottom: var(--yr-s);
   display: grid;

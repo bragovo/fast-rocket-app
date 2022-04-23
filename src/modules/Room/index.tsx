@@ -1,14 +1,27 @@
 import { useRootContext } from "app/context"
 import { observer } from "mobx-react-lite"
-import React, { FC, useEffect } from "react"
+import React, { FC, useEffect, useRef } from "react"
 import { useParams } from "react-router-dom"
 import { Messages } from "../Messages"
 
 import s from "./index.module.css"
 
 export const Room: FC = observer(() => {
+  const messageRef = useRef<HTMLDivElement>(null)
   const { roomId, threadId } = useParams()
   const { space, roomsStore, threadsStore } = useRootContext()
+
+  const resizeObserver = new ResizeObserver((entries) => {
+    if (messageRef.current !== null) {
+      messageRef.current.scrollTop = messageRef.current?.scrollHeight
+    }
+  })
+
+  useEffect(() => {
+    if (messageRef.current !== null) {
+      resizeObserver.observe(messageRef.current)
+    }
+  }, [])
 
   useEffect(() => {
     if (roomId !== undefined && roomsStore.rooms[roomId] !== undefined) {
@@ -32,7 +45,7 @@ export const Room: FC = observer(() => {
             {roomId} - {threadId}
           </div>
 
-          <div className={s.messages}>
+          <div className={s.messages} ref={messageRef}>
             <Messages roomStore={roomsStore.rooms[roomId]} />
           </div>
         </>

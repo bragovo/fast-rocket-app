@@ -1,9 +1,7 @@
 .root {
   height: 100%;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
-  overflow: scroll;
 }
 
 .header {
@@ -13,6 +11,6 @@
 }
 
 .messages {
-  padding: var(--yr-s) var(--xr);
   margin-top: auto;
+  overflow: scroll;
 }
