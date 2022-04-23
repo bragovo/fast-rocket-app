@@ -1,111 +1,53 @@
-import React, { FC, useState } from "react"
-import { getClient } from "@tauri-apps/api/http"
+/* eslint-disable @typescript-eslint/no-misused-promises */
+import React, { FC } from "react"
+import localForage from "localforage"
 
 import s from "./index.module.css"
-import { LoginData } from "./models"
 import { useRootContext } from "app/context"
+import { useForm, SubmitHandler } from "react-hook-form"
 
-const { SNOWPACK_PUBLIC_SPACE_ID: SPACE_ID, SNOWPACK_PUBLIC_API_PATH: API_PATH } = import.meta.env
+interface FormData {
+  userId: string
+  authToken: string
+}
 
 // TODO: Rewrite this component
 export const AddWorkspace: FC = () => {
   const rootStore = useRootContext()
-  const client = getClient()
-  const [user, setUser] = useState("")
-  const [password, setPassword] = useState("")
-  const [totp, setTotp] = useState(false)
-  const [code, setCode] = useState("")
 
-  const handleLoginClick = async (): Promise<void> => {
-    const { data } = await (
-      await client
-    ).post<LoginData>(`${SPACE_ID as string}${API_PATH as string}/login`, {
-      type: "Json",
-      payload: {
-        user,
-        password,
-      },
-    })
+  const {
+    register,
+    watch,
+    handleSubmit,
+    formState: { isSubmitting, isSubmitted },
+  } = useForm<FormData>({ defaultValues: { authToken: "", userId: "" } })
 
-    if (data.status === "error" && data.error === "totp-required") {
-      setTotp(true)
-    } else if (data.status === "success" && data.data != null) {
-      await rootStore.login(data.data.userId, data.data.authToken)
-      // navigation("/workspace")
-    }
-  }
-
-  const handleTotpClick = async (): Promise<void> => {
-    const { data } = await (
-      await client
-    ).post<LoginData>(`${SPACE_ID as string}${API_PATH as string}/login`, {
-      type: "Json",
-      payload: {
-        user,
-        password,
-        code,
-      },
-    })
-
-    if (data.status === "success" && data.data != null) {
-      await rootStore.login(data.data.userId, data.data.authToken)
-      // navigation("/workspace")
-    }
+  const handleFormSubmit: SubmitHandler<FormData> = async (data) => {
+    await localForage.setItem("userId", data.userId)
+    await localForage.setItem("authToken", data.authToken)
+    await rootStore.authStore.initialize()
   }
 
   return (
     <div className={s.root}>
       <div className={s.workspace}>
-        <div className={s.form}>
-          <input
+        <form className={s.form} onSubmit={handleSubmit(handleFormSubmit)}>
+          <input className={s.in} placeholder="Enter user id.." {...register("userId", { required: true })} />
+
+          <textarea
             className={s.in}
-            type="text"
-            value={user}
-            placeholder="Enter user.."
-            onChange={({ target: { value } }) => setUser(value.replace(/\s+/g, " ").trim())}
-          />
-          <input
-            className={s.in}
-            type="text"
-            value={password}
-            placeholder="Enter password.."
-            onChange={({ target: { value } }) => setPassword(value.replace(/\s+/g, " ").trim())}
+            placeholder="Enter access token.."
+            {...register("authToken", { required: true })}
+            rows={3}
           />
 
-          {totp && (
-            <>
-              <input
-                className={s.in}
-                type="text"
-                value={code}
-                placeholder="Enter auth code.."
-                onChange={({ target: { value } }) => setCode(value.replace(/\s+/g, " ").trim())}
-              />
-
-              <button
-                className={s.button}
-                type="button"
-                disabled={user === "" || password === "" || (totp && code === "")}
-                // eslint-disable-next-line @typescript-eslint/no-misused-promises
-                onClick={handleTotpClick}
-              >
-                Login
-              </button>
-            </>
-          )}
-
-          {!totp && (
-            <button
-              className={s.button}
-              type="button"
-              disabled={user === "" || password === ""}
-              // eslint-disable-next-line @typescript-eslint/no-misused-promises
-              onClick={handleLoginClick}
-            >
-              Login
-            </button>
-          )}
-        </div>
+          <button
+            className={s.button}
+            disabled={watch("userId") === "" || watch("authToken") === "" || isSubmitting || isSubmitted}
+          >
+            Launch 🚀
+          </button>
+        </form>
       </div>
     </div>
   )

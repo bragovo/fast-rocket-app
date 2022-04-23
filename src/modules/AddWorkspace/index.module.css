@@ -6,6 +6,7 @@
 .workspace {
   align-self: center;
   margin: 0 auto;
+  padding: 0 var(--xr);
 }
 
 .in,
@@ -21,11 +22,16 @@
   line-height: calc(var(--yr) * 8);
   padding: var(--yr-xs) var(--xr);
   margin: 0;
+  width: 100%;
 }
 
 .in {
   background: rgb(var(--theme-bg-primary-color));
   margin: 0 0 var(--yr-m);
+}
+
+textarea.in {
+  resize: none;
 }
 
 .button {

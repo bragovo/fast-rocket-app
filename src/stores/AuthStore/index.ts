@@ -1,19 +1,41 @@
-import { makeAutoObservable } from "mobx"
+import { makeAutoObservable, runInAction } from "mobx"
+import { RootStore } from "../RootStore"
+import localForage from "localforage"
+import { SpaceStore } from "../SpaceStore"
 
+const { SNOWPACK_PUBLIC_SPACE_ID: SPACE_ID, SNOWPACK_PUBLIC_API_PATH: API_PATH } = import.meta.env
 export class AuthStore {
-  authToken: string
-  userId: string
+  authToken?: string
+  userId?: string
+  rootStore: RootStore
+  auth = false
+  initialized = false
 
-  constructor(userId: string, authToken: string) {
-    this.authToken = userId
-    this.userId = authToken
+  constructor(rootStore: RootStore) {
+    makeAutoObservable(this, { rootStore: false })
 
-    makeAutoObservable(this)
+    this.rootStore = rootStore
+    void this.initialize()
   }
 
-  // loadMe = async (): Promise<void> => {
-  //   const { data } = await axios.get("/me")
+  initialize = async () => {
+    const { userId, authToken } = await this.loadFromStorage()
 
-  //   console.log(data)
-  // }
+    runInAction(() => {
+      // TODO: Make "me" request
+      if (userId !== null && authToken !== null) {
+        this.auth = true
+        this.rootStore.space = new SpaceStore(this.rootStore, SPACE_ID, API_PATH, userId, authToken)
+      }
+
+      this.initialized = true
+    })
+  }
+
+  loadFromStorage = async (): Promise<{ userId: string | null; authToken: string | null }> => {
+    const userId = await localForage.getItem<string>("userId")
+    const authToken = await localForage.getItem<string>("authToken")
+
+    return { userId, authToken }
+  }
 }

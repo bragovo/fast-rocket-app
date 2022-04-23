@@ -4,27 +4,20 @@ import localForage from "localforage"
 import { ThreadsStore } from "../ThreadsStore"
 import { SpaceStore } from "../SpaceStore"
 import { RoomsStore } from "../RoomsStore"
-
-const { SNOWPACK_PUBLIC_SPACE_ID: SPACE_ID, SNOWPACK_PUBLIC_API_PATH: API_PATH } = import.meta.env
+import { AuthStore } from "../AuthStore"
 
 export class RootStore {
   initialized = false
   space: SpaceStore | false = false
   roomsStore: RoomsStore
+  authStore: AuthStore
   threadsStore: ThreadsStore
   offline = false
 
-  constructor(loadSpaceFromStorage: () => Promise<{ userId: string | null; authToken: string | null }>) {
+  constructor() {
     makeAutoObservable(this)
 
-    void loadSpaceFromStorage().then(({ userId, authToken }) => {
-      runInAction(() => {
-        if (userId !== null && authToken !== null) {
-          this.space = new SpaceStore(this, SPACE_ID, API_PATH, userId, authToken)
-        }
-      })
-    })
-
+    this.authStore = new AuthStore(this)
     this.threadsStore = new ThreadsStore(this)
     this.roomsStore = new RoomsStore(this)
 
@@ -58,15 +51,6 @@ export class RootStore {
     console.log("setOffline")
 
     this.offline = true
-  }
-
-  login = async (userId: string, authToken: string) => {
-    await localForage.setItem("userId", userId)
-    await localForage.setItem("authToken", authToken)
-
-    runInAction(() => {
-      this.space = new SpaceStore(this, SPACE_ID, API_PATH, userId, authToken)
-    })
   }
 
   // TODO: Clean up channels and other stores!!
