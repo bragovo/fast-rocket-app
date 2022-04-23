@@ -3,12 +3,16 @@ name: CI
 on: push
 
 jobs:
-  eslint:
+  eslint-prettier-and-tsc:
+    name: Lint, Prettier and TSC
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
       - run: yarn --frozen-lockfile
-      - run: yarn eslint .
-      - run: yarn prettier -c .
-      - run: yarn tsc --project tsconfig.json
+      - name: ESLint
+        run: yarn eslint .
+      - name: prettier
+        run: yarn prettier -c .
+      - name: TSC
+        run: yarn tsc --project tsconfig.json
