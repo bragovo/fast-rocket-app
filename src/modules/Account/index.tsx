@@ -21,19 +21,19 @@ export const Account: FC = observer(() => {
     navigate("/workspace")
   }
 
-  const { register, watch, getValues } = useForm<FormData>({ defaultValues: { desktopNotifications: "all" } })
+  const { register, watch, getValues, reset } = useForm<FormData>({ defaultValues: { desktopNotifications: "all" } })
 
   useEffect(() => {
-    const _loadData = async (space: FormData): Promise<void> => {
-      // const data = await space.getRequest<PreferencesData>("/users.getPreferences", {})
+    const _loadData = async (space: SpaceStore): Promise<void> => {
+      const data = await space.getRequest<PreferencesData>("/users.getPreferences", {})
 
-      // if (data.success) {
-      //   if (data.preferences.desktopNotifications !== undefined) {
-      //     reset({
-      //       desktopNotifications: data.preferences.desktopNotifications,
-      //     })
-      //   }
-      // }
+      if (data.success) {
+        if (data.preferences.desktopNotifications !== undefined) {
+          reset({
+            desktopNotifications: data.preferences.desktopNotifications,
+          })
+        }
+      }
 
       console.log(space)
 
