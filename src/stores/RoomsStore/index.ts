@@ -23,7 +23,6 @@ export class RoomsStore {
 
   loadSubscriptions = async (space: SpaceStore) => {
     const data = await space.getRequest<SubscriptionsData>("/subscriptions.get", {})
-    console.log(data)
 
     runInAction(() => {
       data.update.forEach((sub) => {

@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite"
 import React, { FC } from "react"
-import { NavLink, useLocation } from "react-router-dom"
+import { NavLink } from "react-router-dom"
 import { useRootContext } from "app/context"
 import cc from "classcat"
 
@@ -8,12 +8,7 @@ import s from "./index.module.css"
 
 export const List: FC = observer(() => {
   const rootStore = useRootContext()
-  const location = useLocation()
-  const { roomsStore } = rootStore
-
-  const handleLogoutClick = (): void => {
-    void rootStore.logout()
-  }
+  const { roomsStore, space } = rootStore
 
   return (
     <div className={s.root}>
@@ -28,13 +23,17 @@ export const List: FC = observer(() => {
         </div>
       ))}
 
-      <div className={s.logout}>
-        <button type="button" onClick={handleLogoutClick}>
-          Logout
-        </button>
-      </div>
-
-      <div>{location.pathname}</div>
+      {space !== false && (
+        <NavLink to="/account" className={s.account}>
+          <div className={s.avatar}>
+            <img src={space.meStore.avatarUrl} />
+          </div>
+          <div>
+            <div className={s.name}>{space.meStore.name}</div>
+            <div className={s.status}>{space.meStore.status}</div>
+          </div>
+        </NavLink>
+      )}
     </div>
   )
 })

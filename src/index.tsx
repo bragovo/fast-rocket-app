@@ -8,18 +8,21 @@ import { AddWorkspace } from "./modules/AddWorkspace"
 import { observer } from "mobx-react-lite"
 import { useRootContext } from "./context"
 import { Room } from "./modules/Room"
+import { Account } from "./modules/Account"
 
 const App: FC = observer(() => {
   const navigate = useNavigate()
+  // const location = useLocation()
   const rootStore = useRootContext()
 
   useEffect(() => {
-    if (rootStore.space !== false) {
-      navigate("/workspace", { replace: true })
-    } else {
+    if (rootStore.authStore.initialized && (!rootStore.authStore.auth || rootStore.space === false)) {
       navigate("/", { replace: true })
+    } else {
+      // if (location.pathname === "/")
+      navigate("/workspace", { replace: true })
     }
-  }, [rootStore.space])
+  }, [rootStore.space, rootStore.authStore.initialized, rootStore.authStore.auth])
 
   return (
     <>
@@ -38,6 +41,7 @@ const FastRocketApp: FC = observer(() => {
       <Routes>
         <Route path="/" element={<App />}>
           <Route index element={<AddWorkspace />} />
+          <Route path="account" element={<Account />} />
 
           <Route path="workspace" element={<Layout />}>
             <Route index element={<Intro />} />

@@ -6,6 +6,8 @@
   --lh-base: calc(var(--yr) * 5);
   --fs-at: calc(var(--yr) * 3);
   --lh-at: calc(var(--yr) * 4);
+  --fs-h1: calc(var(--yr) * 5.5);
+  --lh-h1: calc(var(--yr) * 8);
 
   --theme-bg-primary-color: 255 255 255;
   --theme-bg-secondary-color: 248 248 248;

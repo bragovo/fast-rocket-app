@@ -22,11 +22,35 @@
   background: rgb(var(--theme-sp-color));
 }
 
-.logout {
-  margin-top: var(--yr-m);
-  text-align: center;
+.alert {
+  font-weight: 600;
 }
 
-.alert {
+.account {
+  margin-top: var(--yr-m);
+  display: grid;
+  grid-template-columns: calc(var(--yr) * 8) 1fr;
+  grid-gap: var(--yr-s);
+  text-decoration: none;
+  color: inherit;
+}
+
+.avatar {
+  border-radius: var(--yr);
+  overflow: hidden;
+}
+
+.avatar img {
+  display: block;
+  width: calc(var(--yr) * 8);
+  height: calc(var(--yr) * 8);
+}
+
+.status {
+  line-height: var(--fs-at);
+  font-size: var(--fs-at);
+}
+
+.name {
   font-weight: 600;
 }
