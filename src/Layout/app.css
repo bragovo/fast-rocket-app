@@ -64,7 +64,7 @@ body {
 }
 
 code {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: "IBM Plex Mono", monospace;
   white-space: pre-wrap;
   word-wrap: break-word;
   word-break: normal;
