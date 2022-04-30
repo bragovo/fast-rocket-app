@@ -50,7 +50,7 @@ export class RoomStore {
           $exists: false,
         },
       }),
-      sort: JSON.stringify({ ts: 1 }),
+      sort: JSON.stringify({ ts: -1 }),
     })
 
     runInAction(() => {
@@ -66,7 +66,7 @@ export class RoomStore {
           $exists: false,
         },
       }),
-      sort: JSON.stringify({ ts: 1 }),
+      sort: JSON.stringify({ ts: -1 }),
     })
 
     runInAction(() => {
@@ -76,8 +76,10 @@ export class RoomStore {
 
   get displayMessages(): MessageStore[] {
     return Object.entries(this.messages)
-      .filter((o) => o[1].t === undefined)
       .map((o) => o[1])
+      .sort((a, b) => {
+        return a.ts.diff(b.ts)
+      })
   }
 
   get symbol(): string {

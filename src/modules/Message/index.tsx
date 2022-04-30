@@ -2,6 +2,7 @@ import { MessageStore } from "app/stores/MessageStore"
 import { observer } from "mobx-react-lite"
 import React, { FC } from "react"
 import { Link } from "react-router-dom"
+import { Msg } from "../Msg"
 
 import s from "./index.module.css"
 
@@ -18,14 +19,16 @@ export const Message: FC<{ message: MessageStore; fis: boolean }> = observer(({ 
         )}
       </div>
 
-      <div>
+      <div className={s.cnt}>
         {fis && (
           <div>
             <strong>{message.u.name}</strong>
           </div>
         )}
 
-        <div>{message.msg}</div>
+        <div>
+          <Msg messageStore={message} />
+        </div>
 
         {message.tcount !== undefined && message.tcount > 0 && (
           <Link to={message._id} className={s.thread}>
@@ -34,7 +37,9 @@ export const Message: FC<{ message: MessageStore; fis: boolean }> = observer(({ 
               <div className={s.av} />
               <div className={s.av} />
             </div>
-            <div>{message.tcount} replies</div>
+            <div>
+              {message.tcount} {message.tcount === 1 ? "reply" : "replies"}
+            </div>
             <div className={s.rarr}>&rarr;</div>
           </Link>
         )}
