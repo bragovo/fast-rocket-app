@@ -1,8 +1,8 @@
-import { makeAutoObservable, runInAction } from "mobx"
+import { makeAutoObservable } from "mobx"
 import { RootStore } from "../RootStore"
 import { SpaceStore } from "../SpaceStore"
 import { RoomStore } from "../RoomStore"
-import { SubscriptionsData } from "./models"
+import { SubscriptionData, SubscriptionsData } from "./models"
 import { MessageData } from "../MessageStore/models"
 
 export class RoomsStore {
@@ -24,11 +24,17 @@ export class RoomsStore {
   loadSubscriptions = async (space: SpaceStore) => {
     const data = await space.getRequest<SubscriptionsData>("/subscriptions.get", {})
 
-    runInAction(() => {
-      data.update.forEach((sub) => {
-        this.rooms[sub.rid] = new RoomStore(sub, this)
-      })
+    data.update.forEach((sub) => {
+      this.createOrUpdateRoom(sub)
     })
+  }
+
+  createOrUpdateRoom = (sub: SubscriptionData) => {
+    if (this.rooms[sub.rid] !== undefined) {
+      this.rooms[sub.rid].update(sub)
+    } else {
+      this.rooms[sub.rid] = new RoomStore(sub, this)
+    }
   }
 
   // loadGroups = async (space: SpaceStore) => {

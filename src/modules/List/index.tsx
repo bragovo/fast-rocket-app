@@ -16,9 +16,10 @@ export const List: FC = observer(() => {
         <div className={s.item} key={roomStore._id}>
           <NavLink
             to={`/workspace/rooms/${roomStore._id}`}
-            className={({ isActive }) => cc([s.link, { [s.active]: isActive, [s.alert]: roomStore.isAlert }])}
+            className={({ isActive }) => cc([s.link, { [s.active]: isActive }])}
           >
             {roomStore.symbol} {roomStore.name}
+            <div className={cc([s.alert, { [s.active]: roomStore.isAlert }])} />
           </NavLink>
         </div>
       ))}

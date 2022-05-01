@@ -4,5 +4,5 @@ import { MessageData } from "app/stores/MessageStore/models"
 
 export interface ChangeData {
   _id: string
-  lastMessage: MessageData
+  lastMessage?: MessageData
 }

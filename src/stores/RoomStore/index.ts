@@ -9,9 +9,9 @@ import { MessagesData, RoomType } from "./models"
 export class RoomStore {
   _id: string
   type: RoomType
-  name: string
-  alert: boolean
-  unread: number
+  name: string = ""
+  alert: boolean = false
+  unread: number = 0
   messages: Record<string, MessageStore> = {}
   roomsStore: RoomsStore
 
@@ -24,6 +24,12 @@ export class RoomStore {
     this.alert = room.alert
     this.unread = room.unread
     this.roomsStore = roomStore
+  }
+
+  update = (room: SubscriptionData) => {
+    this.name = room.name
+    this.alert = room.alert
+    this.unread = room.unread
   }
 
   addMessage = (message: MessageData) => {

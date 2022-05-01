@@ -23,7 +23,11 @@ export const Msg: FC<{ messageStore: MessageStore }> = ({ messageStore }) => {
 
 const renderer = {
   paragraph(text: string) {
-    return <p className={s.paragraph}>{text}</p>
+    return (
+      <p key={this.elementId} className={s.paragraph}>
+        {text}
+      </p>
+    )
   },
   code(code: string, infostring: string, escaped: boolean) {
     return <code className={s.code}>{code}</code>
