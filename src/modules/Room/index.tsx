@@ -32,6 +32,8 @@ export const Room: FC = observer(() => {
   useEffect(() => {
     if (threadId !== undefined) {
       threadsStore.setThread(threadId)
+    } else {
+      threadsStore.removeThread()
     }
   }, [threadId])
 

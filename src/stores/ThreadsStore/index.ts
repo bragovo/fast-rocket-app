@@ -22,6 +22,10 @@ export class ThreadsStore {
     }
   }
 
+  removeThread = () => {
+    this.tmid = false
+  }
+
   loadThreadMessages = async (space: SpaceStore, tmid: string) => {
     const data = await space.getRequest<MessagesData>("/chat.getThreadMessages", {
       tmid: tmid,
