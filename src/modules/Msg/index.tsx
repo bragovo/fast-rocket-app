@@ -15,15 +15,10 @@ export const Msg: FC<{ messageStore: MessageStore }> = ({ messageStore }) => {
   return <div>{msg}</div>
 }
 
-// const renderer = new Renderer()
-
-// renderer.paragraph = (text: string) => {
-//   return <div>qqqq</div>
-// }
-
 const renderer = {
   paragraph(text: string) {
     return (
+      // @ts-expect-error: elementId does not exists https://github.com/sibiraj-s/marked-react/issues/3
       <p key={this.elementId} className={s.paragraph}>
         {text}
       </p>
