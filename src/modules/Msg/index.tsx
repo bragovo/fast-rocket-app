@@ -1,5 +1,6 @@
 import { MessageStore } from "app/stores/MessageStore"
 import React, { FC, useMemo } from "react"
+// TODO: maybe replace marked-react package with pure marked
 import Markdown from "marked-react"
 
 import s from "./index.module.css"

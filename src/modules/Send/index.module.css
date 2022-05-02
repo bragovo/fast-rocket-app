@@ -16,3 +16,19 @@
   outline: none;
   margin: 0;
 }
+
+.strong {
+  font-weight: 700;
+}
+
+.em {
+  font-style: italic;
+}
+
+.code {
+  color: red;
+}
+
+.codespan {
+  color: green;
+}
