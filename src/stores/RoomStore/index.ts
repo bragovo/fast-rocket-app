@@ -83,6 +83,7 @@ export class RoomStore {
   get displayMessages(): MessageStore[] {
     return Object.entries(this.messages)
       .map((o) => o[1])
+      .filter((m) => m.t === undefined)
       .sort((a, b) => {
         return a.ts.diff(b.ts)
       })

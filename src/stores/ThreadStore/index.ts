@@ -16,8 +16,6 @@ export class ThreadStore {
   }
 
   get displayMessages(): MessageStore[] {
-    // console.log(Object.entries(this.messages))
-    // .filter(o => !o[1].t)
     return Object.entries(this.messages).map((o) => o[1])
   }
 }

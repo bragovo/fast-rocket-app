@@ -28,9 +28,6 @@ export class SubscriptionsChangedStore {
   }
 
   applyChange = (args: SubscriptionData) => {
-    console.log("SubscriptionsChangeData")
-    console.log(args)
     this.subsStore.spaceStore.rootStore.roomsStore.createOrUpdateRoom(args)
-    // this.subsStore.spaceStore.rootStore.roomsStore.addMessage(args._id, args.lastMessage)
   }
 }

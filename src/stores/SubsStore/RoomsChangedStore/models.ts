@@ -1,8 +1,19 @@
 // import { MessageData } from "app/models"
 
-import { MessageData } from "app/stores/MessageStore/models"
+import { MessageMentionData, MessageUserData } from "app/stores/MessageStore/models"
 
-export interface ChangeData {
+// import { MessageData } from "app/stores/MessageStore/models"
+
+export interface RoomsChangedData {
   _id: string
-  lastMessage?: MessageData
+  lastMessage?: {
+    _id: string
+    msg: string
+    tmid?: string
+    ts: {
+      $date: number
+    }
+    mentions: MessageMentionData[]
+    u: MessageUserData
+  }
 }

@@ -4,7 +4,7 @@ import { SpaceStore } from "../SpaceStore"
 import { NotificationStore } from "./NotificationStore"
 import { NotificationData } from "./NotificationStore/models"
 import { RoomsChangedStore } from "./RoomsChangedStore"
-import { ChangeData } from "./RoomsChangedStore/models"
+import { RoomsChangedData } from "./RoomsChangedStore/models"
 import { SubscriptionsChangedStore } from "./SubscriptionsChangedStore"
 
 export class SubsStore {
@@ -136,7 +136,7 @@ export class SubsStore {
       // this.roomChangedStore.initialize()
     } else if (data.msg === "changed") {
       if (data.collection === "stream-notify-user" && data.fields.eventName === this.roomsChangedStore.eventName) {
-        this.roomsChangedStore.applyChange(data.fields.args[1] as ChangeData)
+        this.roomsChangedStore.applyChange(data.fields.args[1] as RoomsChangedData)
       }
 
       if (
@@ -147,7 +147,6 @@ export class SubsStore {
       }
 
       if (data.collection === "stream-notify-user" && data.fields.eventName === this.notificationStore.eventName) {
-        console.log(data.fields.args[0])
         this.notificationStore.sendNotification(data.fields.args[0] as NotificationData)
       }
     } else {

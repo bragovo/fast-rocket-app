@@ -1,23 +1,18 @@
 // import { MessageData } from "app/models";
 
-import { MentionData, MessageData } from "./models"
+import { MessageMentionData, MessageData, MessageDataType, MessageUserData } from "./models"
 import dayjs, { Dayjs } from "dayjs"
 
 export class MessageStore {
   _id: string
   msg: string
-  t: string
+  t?: MessageDataType
   ts: Dayjs
   tcount?: number
-  mentions: MentionData[]
-  u: {
-    _id: string
-    username: string
-    name: string
-  }
+  mentions: MessageMentionData[]
+  u: MessageUserData
 
   constructor(message: MessageData) {
-    console.log(message)
     this._id = message._id
     this.msg = message.msg
     this.t = message.t

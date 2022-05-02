@@ -27,11 +27,6 @@ export class NotificationStore {
   }
 
   sendNotification = (args: NotificationData) => {
-    console.log({
-      title: args.title,
-      body: args.text,
-    })
-
     sendNotification({
       title: args.title,
       body: args.text,
