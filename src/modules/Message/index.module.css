@@ -1,14 +1,18 @@
 .root {
   margin-bottom: var(--yr-s);
   display: grid;
-  grid-template-columns: calc(var(--yr) * 8) 1fr;
-  grid-gap: var(--xr);
+  grid-template-columns: calc(var(--yr) * 6) 1fr;
+  grid-gap: var(--yr-xs);
+}
+
+.cnt {
+  overflow: hidden;
 }
 
 .image {
-  width: calc(var(--yr) * 8);
-  height: calc(var(--yr) * 8);
-  border-radius: 50%;
+  width: calc(var(--yr) * 6);
+  height: calc(var(--yr) * 6);
+  border-radius: var(--yr);
   background: rgb(var(--theme-bg-secondary-color));
   overflow: hidden;
 }
@@ -20,29 +24,24 @@
 }
 
 .thread {
-  margin-top: var(--yr-xs);
-}
-
-.thread {
   margin: var(--yr) 0 0;
   color: rgb(var(--theme-fg-primary-color));
   appearance: none;
   border: 0;
   background: none;
-  padding: var(--yr) var(--xr) var(--yr) var(--yr);
+  /* padding: var(--yr) var(--xr) var(--yr) var(--yr); */
   border-radius: var(--yr);
   font-size: var(--fs-at);
   line-height: var(--lh-at);
-  font-weight: 600;
+  font-weight: 700;
   display: flex;
   align-items: center;
   cursor: pointer;
-  margin: calc(var(--yr) * -1);
   text-decoration: none;
 }
 
 .thread:hover {
-  background: rgb(var(--theme-sp-color) / 0.5);
+  /* background: rgb(var(--theme-sp-color) / 0.5); */
 }
 
 .rarr {

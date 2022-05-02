@@ -7,6 +7,10 @@
 
 .link {
   display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  position: relative;
   color: rgb(var(--theme-fg-primary-color));
   text-decoration: none;
   padding: var(--yr-xs) var(--xr);
@@ -23,7 +27,18 @@
 }
 
 .alert {
-  font-weight: 600;
+  position: absolute;
+  right: var(--xr);
+  top: 50%;
+  width: var(--yr);
+  height: var(--yr);
+  background: red;
+  border-radius: 50%;
+  opacity: 0;
+}
+
+.alert.active {
+  opacity: 1;
 }
 
 .account {
@@ -52,5 +67,5 @@
 }
 
 .name {
-  font-weight: 600;
+  font-weight: 700;
 }

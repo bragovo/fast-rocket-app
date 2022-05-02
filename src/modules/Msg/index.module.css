@@ -1,0 +1,32 @@
+.paragraph {
+  word-wrap: break-word;
+  max-width: 100%;
+  margin: 0;
+}
+
+.paragraph:not(:last-child) {
+  margin: 0 0 var(--yr-s);
+  display: block;
+}
+
+.code {
+  display: block;
+  box-shadow: inset 0 0 0 1px rgb(var(--theme-sp-color));
+  padding: var(--yr-xs);
+  border-radius: var(--yr);
+  font-size: calc(var(--yr) * 3);
+}
+
+.code:not(:last-child) {
+  margin: 0 0 var(--yr-s);
+}
+
+.link {
+  color: rgb(18 100 163);
+}
+
+.codespan {
+  box-shadow: inset 0 0 0 1px rgb(var(--theme-sp-color));
+  padding: 0 var(--yr);
+  border-radius: var(--yr);
+}

@@ -1,9 +1,11 @@
 import { makeAutoObservable } from "mobx"
+import { SubscriptionData } from "../RoomsStore/models"
 import { SpaceStore } from "../SpaceStore"
 import { NotificationStore } from "./NotificationStore"
 import { NotificationData } from "./NotificationStore/models"
-import { RoomChangedStore } from "./RoomChangedStore"
-import { ChangeData } from "./RoomChangedStore/models"
+import { RoomsChangedStore } from "./RoomsChangedStore"
+import { RoomsChangedData } from "./RoomsChangedStore/models"
+import { SubscriptionsChangedStore } from "./SubscriptionsChangedStore"
 
 export class SubsStore {
   spaceStore: SpaceStore
@@ -13,8 +15,9 @@ export class SubsStore {
   state = false
   alive?: boolean
   timeout?: NodeJS.Timeout
-  roomChangedStore: RoomChangedStore
+  roomsChangedStore: RoomsChangedStore
   notificationStore: NotificationStore
+  subscriptionsChangedStore: SubscriptionsChangedStore
   // subs: Record<string, RoomChangedStore> = {}
 
   constructor(spaceStore: SpaceStore) {
@@ -24,8 +27,9 @@ export class SubsStore {
     this.alive = !spaceStore.rootStore.offline
     this.url = `${spaceStore.host.replace("https://", "wss://")}/websocket`
     this.ws = new WebSocket(this.url)
-    this.roomChangedStore = new RoomChangedStore(this)
+    this.roomsChangedStore = new RoomsChangedStore(this)
     this.notificationStore = new NotificationStore(this)
+    this.subscriptionsChangedStore = new SubscriptionsChangedStore(this)
     this.initialize()
   }
 
@@ -51,9 +55,9 @@ export class SubsStore {
       this.ws.send(
         JSON.stringify({
           msg: "sub",
-          id: this.roomChangedStore.id,
+          id: this.roomsChangedStore.id,
           name: "stream-notify-user",
-          params: [this.roomChangedStore.eventName, false],
+          params: [this.roomsChangedStore.eventName, false],
         })
       )
 
@@ -63,6 +67,15 @@ export class SubsStore {
           id: this.notificationStore.id,
           name: "stream-notify-user",
           params: [this.notificationStore.eventName, false],
+        })
+      )
+
+      this.ws.send(
+        JSON.stringify({
+          msg: "sub",
+          id: this.subscriptionsChangedStore.id,
+          name: "stream-notify-user",
+          params: [this.subscriptionsChangedStore.eventName, false],
         })
       )
 
@@ -115,19 +128,25 @@ export class SubsStore {
       this.alive = true
     } else if (data.msg === "ready") {
       ;(data.subs as string[]).forEach((sub) => {
-        if (this.roomChangedStore.id === sub) {
-          this.roomChangedStore.setReady(true)
+        if (this.roomsChangedStore.id === sub) {
+          this.roomsChangedStore.setReady(true)
         }
       })
     } else if (data.msg === "result" && data.id === "1") {
       // this.roomChangedStore.initialize()
     } else if (data.msg === "changed") {
-      if (data.collection === "stream-notify-user" && data.fields.eventName === this.roomChangedStore.eventName) {
-        this.roomChangedStore.applyChange(data.fields.args[1] as ChangeData)
+      if (data.collection === "stream-notify-user" && data.fields.eventName === this.roomsChangedStore.eventName) {
+        this.roomsChangedStore.applyChange(data.fields.args[1] as RoomsChangedData)
+      }
+
+      if (
+        data.collection === "stream-notify-user" &&
+        data.fields.eventName === this.subscriptionsChangedStore.eventName
+      ) {
+        this.subscriptionsChangedStore.applyChange(data.fields.args[1] as SubscriptionData)
       }
 
       if (data.collection === "stream-notify-user" && data.fields.eventName === this.notificationStore.eventName) {
-        console.log(data.fields.args[0])
         this.notificationStore.sendNotification(data.fields.args[0] as NotificationData)
       }
     } else {

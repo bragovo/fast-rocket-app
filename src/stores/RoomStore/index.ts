@@ -9,9 +9,9 @@ import { MessagesData, RoomType } from "./models"
 export class RoomStore {
   _id: string
   type: RoomType
-  name: string
-  alert: boolean
-  unread: number
+  name: string = ""
+  alert: boolean = false
+  unread: number = 0
   messages: Record<string, MessageStore> = {}
   roomsStore: RoomsStore
 
@@ -24,6 +24,12 @@ export class RoomStore {
     this.alert = room.alert
     this.unread = room.unread
     this.roomsStore = roomStore
+  }
+
+  update = (room: SubscriptionData) => {
+    this.name = room.name
+    this.alert = room.alert
+    this.unread = room.unread
   }
 
   addMessage = (message: MessageData) => {
@@ -50,7 +56,7 @@ export class RoomStore {
           $exists: false,
         },
       }),
-      sort: JSON.stringify({ ts: 1 }),
+      sort: JSON.stringify({ ts: -1 }),
     })
 
     runInAction(() => {
@@ -66,7 +72,7 @@ export class RoomStore {
           $exists: false,
         },
       }),
-      sort: JSON.stringify({ ts: 1 }),
+      sort: JSON.stringify({ ts: -1 }),
     })
 
     runInAction(() => {
@@ -76,8 +82,11 @@ export class RoomStore {
 
   get displayMessages(): MessageStore[] {
     return Object.entries(this.messages)
-      .filter((o) => o[1].t === undefined)
       .map((o) => o[1])
+      .filter((m) => m.t === undefined)
+      .sort((a, b) => {
+        return a.ts.diff(b.ts)
+      })
   }
 
   get symbol(): string {

@@ -62,3 +62,12 @@ body {
   height: 100%;
   margin: 0;
 }
+
+code {
+  font-family: "IBM Plex Mono", monospace;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  word-break: normal;
+  font-size: inherit;
+  line-height: inherit;
+}
